@@ -366,20 +366,21 @@ export const LotsTable = ({ onSelectLot }: Props) => {
 const SortableTh = ({
   label,
   sortKey,
-  current,
-  dir,
+  rules,
   onSort,
   className = "",
 }: {
   label: string;
   sortKey: SortKey;
-  current: SortKey;
-  dir: SortDir;
+  rules: SortRule[];
   onSort: (k: SortKey) => void;
   className?: string;
 }) => {
-  const active = current === sortKey;
+  const idx = rules.findIndex((r) => r.key === sortKey);
+  const active = idx !== -1;
+  const dir = active ? rules[idx].dir : "asc";
   const Icon = active ? (dir === "asc" ? ArrowUp : ArrowDown) : ArrowUpDown;
+  const showOrder = active && rules.length > 1;
   return (
     <th className={`px-5 py-4 font-semibold ${className}`}>
       <button
@@ -387,11 +388,109 @@ const SortableTh = ({
         className={`inline-flex items-center gap-1.5 hover:text-foreground transition-colors ${
           active ? "text-foreground" : ""
         }`}
+        title={
+          active
+            ? dir === "asc"
+              ? "Cliquer pour passer en décroissant"
+              : "Cliquer pour retirer ce tri"
+            : "Cliquer pour ajouter au tri"
+        }
       >
         {label}
         <Icon className="w-3 h-3" />
+        {showOrder && (
+          <span className="ml-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary/15 text-primary text-[10px] font-bold">
+            {idx + 1}
+          </span>
+        )}
       </button>
     </th>
+  );
+};
+
+const SortChips = ({
+  rules,
+  onMove,
+  onToggleDir,
+  onRemove,
+  onReset,
+}: {
+  rules: SortRule[];
+  onMove: (i: number, d: -1 | 1) => void;
+  onToggleDir: (i: number) => void;
+  onRemove: (i: number) => void;
+  onReset: () => void;
+}) => {
+  return (
+    <div className="bg-background border border-border rounded-2xl p-3 mb-3 flex flex-wrap items-center gap-2">
+      <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold px-2">
+        Trié par
+      </span>
+      {rules.length === 0 ? (
+        <span className="text-sm text-muted-foreground italic">Aucun tri actif</span>
+      ) : (
+        rules.map((rule, i) => (
+          <div
+            key={rule.key}
+            className="inline-flex items-center gap-0.5 bg-secondary/60 border border-border rounded-full pl-1 pr-1 py-1"
+          >
+            <button
+              type="button"
+              onClick={() => onMove(i, -1)}
+              disabled={i === 0}
+              className="w-6 h-6 inline-flex items-center justify-center rounded-full hover:bg-background disabled:opacity-30 disabled:cursor-not-allowed text-muted-foreground"
+              aria-label="Monter en priorité"
+            >
+              <ChevronLeft className="w-3.5 h-3.5" />
+            </button>
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold">
+              {i + 1}
+            </span>
+            <button
+              type="button"
+              onClick={() => onToggleDir(i)}
+              className="px-2 py-0.5 text-sm font-medium text-foreground inline-flex items-center gap-1 hover:text-primary"
+              title="Inverser le sens"
+            >
+              {SORT_LABELS[rule.key]}
+              {rule.dir === "asc" ? (
+                <ArrowUp className="w-3 h-3" />
+              ) : (
+                <ArrowDown className="w-3 h-3" />
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => onMove(i, 1)}
+              disabled={i === rules.length - 1}
+              className="w-6 h-6 inline-flex items-center justify-center rounded-full hover:bg-background disabled:opacity-30 disabled:cursor-not-allowed text-muted-foreground"
+              aria-label="Descendre en priorité"
+            >
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => onRemove(i)}
+              className="w-6 h-6 inline-flex items-center justify-center rounded-full hover:bg-destructive/10 hover:text-destructive text-muted-foreground"
+              aria-label="Retirer ce tri"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        ))
+      )}
+      <div className="ml-auto">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onReset}
+          className="text-muted-foreground h-8"
+        >
+          <RotateCcw className="w-3.5 h-3.5 mr-1.5" />
+          Réinitialiser le tri
+        </Button>
+      </div>
+    </div>
   );
 };
 
