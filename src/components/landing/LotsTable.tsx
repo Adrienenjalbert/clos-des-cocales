@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Search, ArrowUpDown, ArrowUp, ArrowDown, Download, X, SlidersHorizontal } from "lucide-react";
+import { Search, ArrowUpDown, ArrowUp, ArrowDown, Download, X, SlidersHorizontal, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
