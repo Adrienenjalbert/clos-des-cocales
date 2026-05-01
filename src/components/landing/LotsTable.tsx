@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Search, ArrowUpDown, ArrowUp, ArrowDown, Download, X, SlidersHorizontal } from "lucide-react";
+import { Search, ArrowUpDown, ArrowUp, ArrowDown, Download, X, SlidersHorizontal, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -8,6 +8,15 @@ import { LOTS, formatPrix, type LotStatus, type Lot } from "@/data/lots";
 
 type SortKey = "numero" | "surface" | "sp" | "prix";
 type SortDir = "asc" | "desc";
+type SortRule = { key: SortKey; dir: SortDir };
+
+const SORT_LABELS: Record<SortKey, string> = {
+  numero: "Lot",
+  surface: "Surface",
+  sp: "SP max",
+  prix: "Prix",
+};
+const DEFAULT_SORT: SortRule[] = [{ key: "prix", dir: "asc" }];
 
 interface Props {
   onSelectLot: (label: string) => void;
@@ -26,8 +35,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
   const [prixRange, setPrixRange] = useState<[number, number]>([PRIX_MIN, PRIX_MAX]);
   const [surfaceRange, setSurfaceRange] = useState<[number, number]>([SURFACE_MIN, SURFACE_MAX]);
   const [statuts, setStatuts] = useState<LotStatus[]>(["Disponible", "Option"]);
-  const [sortBy, setSortBy] = useState<SortKey>("prix");
-  const [sortDir, setSortDir] = useState<SortDir>("asc");
+  const [sortRules, setSortRules] = useState<SortRule[]>(DEFAULT_SORT);
   const [showFilters, setShowFilters] = useState(false);
 
   const lots = useMemo(() => {
@@ -35,7 +43,6 @@ export const LotsTable = ({ onSelectLot }: Props) => {
     const arr = LOTS.filter((l) => {
       if (!statuts.includes(l.statut)) return false;
       if (l.surface < surfaceRange[0] || l.surface > surfaceRange[1]) return false;
-      // Lots sans prix : on les garde si la borne max couvre tout, sinon on filtre
       if (l.prix !== null) {
         if (l.prix < prixRange[0] || l.prix > prixRange[1]) return false;
       } else {
@@ -48,20 +55,50 @@ export const LotsTable = ({ onSelectLot }: Props) => {
       return true;
     });
     return [...arr].sort((a, b) => {
-      const av = (a[sortBy] ?? 0) as number;
-      const bv = (b[sortBy] ?? 0) as number;
-      return sortDir === "asc" ? av - bv : bv - av;
+      for (const { key, dir } of sortRules) {
+        const av = (a[key] ?? 0) as number;
+        const bv = (b[key] ?? 0) as number;
+        if (av !== bv) return dir === "asc" ? av - bv : bv - av;
+      }
+      return 0;
     });
-  }, [search, prixRange, surfaceRange, statuts, sortBy, sortDir]);
+  }, [search, prixRange, surfaceRange, statuts, sortRules]);
 
   const handleSort = (key: SortKey) => {
-    if (sortBy === key) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    } else {
-      setSortBy(key);
-      setSortDir("asc");
-    }
+    setSortRules((rules) => {
+      const idx = rules.findIndex((r) => r.key === key);
+      if (idx === -1) return [...rules, { key, dir: "asc" }];
+      const cur = rules[idx];
+      if (cur.dir === "asc") {
+        const next = [...rules];
+        next[idx] = { key, dir: "desc" };
+        return next;
+      }
+      return rules.filter((_, i) => i !== idx);
+    });
   };
+
+  const moveRule = (index: number, delta: -1 | 1) => {
+    setSortRules((rules) => {
+      const target = index + delta;
+      if (target < 0 || target >= rules.length) return rules;
+      const next = [...rules];
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
+  };
+
+  const toggleRuleDir = (index: number) => {
+    setSortRules((rules) =>
+      rules.map((r, i) => (i === index ? { ...r, dir: r.dir === "asc" ? "desc" : "asc" } : r))
+    );
+  };
+
+  const removeRule = (index: number) => {
+    setSortRules((rules) => rules.filter((_, i) => i !== index));
+  };
+
+  const resetSort = () => setSortRules(DEFAULT_SORT);
 
   const toggleStatut = (s: LotStatus) => {
     setStatuts((cur) =>
@@ -259,6 +296,15 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           </div>
         )}
 
+        {/* Tri multi-critères */}
+        <SortChips
+          rules={sortRules}
+          onMove={moveRule}
+          onToggleDir={toggleRuleDir}
+          onRemove={removeRule}
+          onReset={resetSort}
+        />
+
         {/* Compteur résultats */}
         <div className="flex items-center justify-between mb-3 text-sm text-muted-foreground">
           <span>
@@ -266,6 +312,11 @@ export const LotsTable = ({ onSelectLot }: Props) => {
             {lots.length > 1 ? "s" : ""} affiché{lots.length > 1 ? "s" : ""} sur{" "}
             {LOTS.length}
           </span>
+          {sortRules.length > 1 && (
+            <span className="hidden sm:inline text-xs">
+              Astuce : cliquez plusieurs fois sur les en-têtes pour empiler les tris.
+            </span>
+          )}
         </div>
 
         {/* Tableau */}
@@ -274,10 +325,10 @@ export const LotsTable = ({ onSelectLot }: Props) => {
             <table className="w-full">
               <thead>
                 <tr className="bg-secondary/60 text-left text-xs uppercase tracking-wider text-muted-foreground">
-                  <SortableTh label="Lot" sortKey="numero" current={sortBy} dir={sortDir} onSort={handleSort} />
-                  <SortableTh label="Surface" sortKey="surface" current={sortBy} dir={sortDir} onSort={handleSort} />
-                  <SortableTh label="SP max" sortKey="sp" current={sortBy} dir={sortDir} onSort={handleSort} className="hidden sm:table-cell" />
-                  <SortableTh label="Prix" sortKey="prix" current={sortBy} dir={sortDir} onSort={handleSort} />
+                  <SortableTh label="Lot" sortKey="numero" rules={sortRules} onSort={handleSort} />
+                  <SortableTh label="Surface" sortKey="surface" rules={sortRules} onSort={handleSort} />
+                  <SortableTh label="SP max" sortKey="sp" rules={sortRules} onSort={handleSort} className="hidden sm:table-cell" />
+                  <SortableTh label="Prix" sortKey="prix" rules={sortRules} onSort={handleSort} />
                   <th className="px-5 py-4 font-semibold hidden md:table-cell">Statut</th>
                   <th className="px-5 py-4 font-semibold text-right">Action</th>
                 </tr>
@@ -315,20 +366,21 @@ export const LotsTable = ({ onSelectLot }: Props) => {
 const SortableTh = ({
   label,
   sortKey,
-  current,
-  dir,
+  rules,
   onSort,
   className = "",
 }: {
   label: string;
   sortKey: SortKey;
-  current: SortKey;
-  dir: SortDir;
+  rules: SortRule[];
   onSort: (k: SortKey) => void;
   className?: string;
 }) => {
-  const active = current === sortKey;
+  const idx = rules.findIndex((r) => r.key === sortKey);
+  const active = idx !== -1;
+  const dir = active ? rules[idx].dir : "asc";
   const Icon = active ? (dir === "asc" ? ArrowUp : ArrowDown) : ArrowUpDown;
+  const showOrder = active && rules.length > 1;
   return (
     <th className={`px-5 py-4 font-semibold ${className}`}>
       <button
@@ -336,11 +388,109 @@ const SortableTh = ({
         className={`inline-flex items-center gap-1.5 hover:text-foreground transition-colors ${
           active ? "text-foreground" : ""
         }`}
+        title={
+          active
+            ? dir === "asc"
+              ? "Cliquer pour passer en décroissant"
+              : "Cliquer pour retirer ce tri"
+            : "Cliquer pour ajouter au tri"
+        }
       >
         {label}
         <Icon className="w-3 h-3" />
+        {showOrder && (
+          <span className="ml-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary/15 text-primary text-[10px] font-bold">
+            {idx + 1}
+          </span>
+        )}
       </button>
     </th>
+  );
+};
+
+const SortChips = ({
+  rules,
+  onMove,
+  onToggleDir,
+  onRemove,
+  onReset,
+}: {
+  rules: SortRule[];
+  onMove: (i: number, d: -1 | 1) => void;
+  onToggleDir: (i: number) => void;
+  onRemove: (i: number) => void;
+  onReset: () => void;
+}) => {
+  return (
+    <div className="bg-background border border-border rounded-2xl p-3 mb-3 flex flex-wrap items-center gap-2">
+      <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold px-2">
+        Trié par
+      </span>
+      {rules.length === 0 ? (
+        <span className="text-sm text-muted-foreground italic">Aucun tri actif</span>
+      ) : (
+        rules.map((rule, i) => (
+          <div
+            key={rule.key}
+            className="inline-flex items-center gap-0.5 bg-secondary/60 border border-border rounded-full pl-1 pr-1 py-1"
+          >
+            <button
+              type="button"
+              onClick={() => onMove(i, -1)}
+              disabled={i === 0}
+              className="w-6 h-6 inline-flex items-center justify-center rounded-full hover:bg-background disabled:opacity-30 disabled:cursor-not-allowed text-muted-foreground"
+              aria-label="Monter en priorité"
+            >
+              <ChevronLeft className="w-3.5 h-3.5" />
+            </button>
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold">
+              {i + 1}
+            </span>
+            <button
+              type="button"
+              onClick={() => onToggleDir(i)}
+              className="px-2 py-0.5 text-sm font-medium text-foreground inline-flex items-center gap-1 hover:text-primary"
+              title="Inverser le sens"
+            >
+              {SORT_LABELS[rule.key]}
+              {rule.dir === "asc" ? (
+                <ArrowUp className="w-3 h-3" />
+              ) : (
+                <ArrowDown className="w-3 h-3" />
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => onMove(i, 1)}
+              disabled={i === rules.length - 1}
+              className="w-6 h-6 inline-flex items-center justify-center rounded-full hover:bg-background disabled:opacity-30 disabled:cursor-not-allowed text-muted-foreground"
+              aria-label="Descendre en priorité"
+            >
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => onRemove(i)}
+              className="w-6 h-6 inline-flex items-center justify-center rounded-full hover:bg-destructive/10 hover:text-destructive text-muted-foreground"
+              aria-label="Retirer ce tri"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        ))
+      )}
+      <div className="ml-auto">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onReset}
+          className="text-muted-foreground h-8"
+        >
+          <RotateCcw className="w-3.5 h-3.5 mr-1.5" />
+          Réinitialiser le tri
+        </Button>
+      </div>
+    </div>
   );
 };
 
