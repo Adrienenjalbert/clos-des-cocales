@@ -8,6 +8,15 @@ import { LOTS, formatPrix, type LotStatus, type Lot } from "@/data/lots";
 
 type SortKey = "numero" | "surface" | "sp" | "prix";
 type SortDir = "asc" | "desc";
+type SortRule = { key: SortKey; dir: SortDir };
+
+const SORT_LABELS: Record<SortKey, string> = {
+  numero: "Lot",
+  surface: "Surface",
+  sp: "SP max",
+  prix: "Prix",
+};
+const DEFAULT_SORT: SortRule[] = [{ key: "prix", dir: "asc" }];
 
 interface Props {
   onSelectLot: (label: string) => void;
