@@ -296,6 +296,15 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           </div>
         )}
 
+        {/* Tri multi-critères */}
+        <SortChips
+          rules={sortRules}
+          onMove={moveRule}
+          onToggleDir={toggleRuleDir}
+          onRemove={removeRule}
+          onReset={resetSort}
+        />
+
         {/* Compteur résultats */}
         <div className="flex items-center justify-between mb-3 text-sm text-muted-foreground">
           <span>
@@ -303,6 +312,11 @@ export const LotsTable = ({ onSelectLot }: Props) => {
             {lots.length > 1 ? "s" : ""} affiché{lots.length > 1 ? "s" : ""} sur{" "}
             {LOTS.length}
           </span>
+          {sortRules.length > 1 && (
+            <span className="hidden sm:inline text-xs">
+              Astuce : cliquez plusieurs fois sur les en-têtes pour empiler les tris.
+            </span>
+          )}
         </div>
 
         {/* Tableau */}
@@ -311,10 +325,10 @@ export const LotsTable = ({ onSelectLot }: Props) => {
             <table className="w-full">
               <thead>
                 <tr className="bg-secondary/60 text-left text-xs uppercase tracking-wider text-muted-foreground">
-                  <SortableTh label="Lot" sortKey="numero" current={sortBy} dir={sortDir} onSort={handleSort} />
-                  <SortableTh label="Surface" sortKey="surface" current={sortBy} dir={sortDir} onSort={handleSort} />
-                  <SortableTh label="SP max" sortKey="sp" current={sortBy} dir={sortDir} onSort={handleSort} className="hidden sm:table-cell" />
-                  <SortableTh label="Prix" sortKey="prix" current={sortBy} dir={sortDir} onSort={handleSort} />
+                  <SortableTh label="Lot" sortKey="numero" rules={sortRules} onSort={handleSort} />
+                  <SortableTh label="Surface" sortKey="surface" rules={sortRules} onSort={handleSort} />
+                  <SortableTh label="SP max" sortKey="sp" rules={sortRules} onSort={handleSort} className="hidden sm:table-cell" />
+                  <SortableTh label="Prix" sortKey="prix" rules={sortRules} onSort={handleSort} />
                   <th className="px-5 py-4 font-semibold hidden md:table-cell">Statut</th>
                   <th className="px-5 py-4 font-semibold text-right">Action</th>
                 </tr>
