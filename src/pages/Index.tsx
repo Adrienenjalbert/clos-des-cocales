@@ -1,16 +1,81 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect, useRef } from "react";
+import { Header } from "@/components/landing/Header";
+import { Hero } from "@/components/landing/Hero";
+import { Programme } from "@/components/landing/Programme";
+import { Atouts } from "@/components/landing/Atouts";
+import { LotsTable } from "@/components/landing/LotsTable";
+import { Localisation } from "@/components/landing/Localisation";
+import { Etapes } from "@/components/landing/Etapes";
+import { FAQ } from "@/components/landing/FAQ";
+import { ContactSection, type ContactSectionHandle } from "@/components/landing/ContactSection";
+import { Footer } from "@/components/landing/Footer";
+import { MobileCTA } from "@/components/landing/MobileCTA";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const contactRef = useRef<ContactSectionHandle>(null);
+
+  useEffect(() => {
+    document.title = "Le Clos des Cocales — Terrains à bâtir à Espondeilhan dès 99 900 €";
+
+    const setMeta = (name: string, content: string) => {
+      let el = document.querySelector(`meta[name="${name}"]`);
+      if (!el) {
+        el = document.createElement("meta");
+        el.setAttribute("name", name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute("content", content);
+    };
+
+    setMeta(
+      "description",
+      "Terrains à bâtir viabilisés à Espondeilhan (Hérault), à 15 min de Béziers. De 250 à 832 m² dès 99 900 €. Frais de notaire réduits 3 %. Livraison immédiate."
+    );
+    setMeta("robots", "index, follow");
+    document.documentElement.lang = "fr";
+
+    // JSON-LD
+    const ldId = "ld-real-estate";
+    let ld = document.getElementById(ldId);
+    if (!ld) {
+      ld = document.createElement("script");
+      ld.id = ldId;
+      (ld as HTMLScriptElement).type = "application/ld+json";
+      document.head.appendChild(ld);
+    }
+    ld.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Residence",
+      name: "Le Clos des Cocales",
+      description:
+        "Lotissement de terrains à bâtir viabilisés à Espondeilhan, Hérault.",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Espondeilhan",
+        addressRegion: "Hérault",
+        addressCountry: "FR",
+      },
+      offers: { "@type": "Offer", priceCurrency: "EUR", price: "99900" },
+    });
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main>
+        <Hero />
+        <Programme />
+        <Atouts />
+        <LotsTable onSelectLot={(label) => contactRef.current?.setLot(label)} />
+        <Localisation />
+        <Etapes />
+        <FAQ />
+        <ContactSection ref={contactRef} />
+      </main>
+      <Footer />
+      <MobileCTA />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
