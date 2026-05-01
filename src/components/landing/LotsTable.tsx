@@ -35,8 +35,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
   const [prixRange, setPrixRange] = useState<[number, number]>([PRIX_MIN, PRIX_MAX]);
   const [surfaceRange, setSurfaceRange] = useState<[number, number]>([SURFACE_MIN, SURFACE_MAX]);
   const [statuts, setStatuts] = useState<LotStatus[]>(["Disponible", "Option"]);
-  const [sortBy, setSortBy] = useState<SortKey>("prix");
-  const [sortDir, setSortDir] = useState<SortDir>("asc");
+  const [sortRules, setSortRules] = useState<SortRule[]>(DEFAULT_SORT);
   const [showFilters, setShowFilters] = useState(false);
 
   const lots = useMemo(() => {
@@ -44,7 +43,6 @@ export const LotsTable = ({ onSelectLot }: Props) => {
     const arr = LOTS.filter((l) => {
       if (!statuts.includes(l.statut)) return false;
       if (l.surface < surfaceRange[0] || l.surface > surfaceRange[1]) return false;
-      // Lots sans prix : on les garde si la borne max couvre tout, sinon on filtre
       if (l.prix !== null) {
         if (l.prix < prixRange[0] || l.prix > prixRange[1]) return false;
       } else {
@@ -57,20 +55,50 @@ export const LotsTable = ({ onSelectLot }: Props) => {
       return true;
     });
     return [...arr].sort((a, b) => {
-      const av = (a[sortBy] ?? 0) as number;
-      const bv = (b[sortBy] ?? 0) as number;
-      return sortDir === "asc" ? av - bv : bv - av;
+      for (const { key, dir } of sortRules) {
+        const av = (a[key] ?? 0) as number;
+        const bv = (b[key] ?? 0) as number;
+        if (av !== bv) return dir === "asc" ? av - bv : bv - av;
+      }
+      return 0;
     });
-  }, [search, prixRange, surfaceRange, statuts, sortBy, sortDir]);
+  }, [search, prixRange, surfaceRange, statuts, sortRules]);
 
   const handleSort = (key: SortKey) => {
-    if (sortBy === key) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    } else {
-      setSortBy(key);
-      setSortDir("asc");
-    }
+    setSortRules((rules) => {
+      const idx = rules.findIndex((r) => r.key === key);
+      if (idx === -1) return [...rules, { key, dir: "asc" }];
+      const cur = rules[idx];
+      if (cur.dir === "asc") {
+        const next = [...rules];
+        next[idx] = { key, dir: "desc" };
+        return next;
+      }
+      return rules.filter((_, i) => i !== idx);
+    });
   };
+
+  const moveRule = (index: number, delta: -1 | 1) => {
+    setSortRules((rules) => {
+      const target = index + delta;
+      if (target < 0 || target >= rules.length) return rules;
+      const next = [...rules];
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
+  };
+
+  const toggleRuleDir = (index: number) => {
+    setSortRules((rules) =>
+      rules.map((r, i) => (i === index ? { ...r, dir: r.dir === "asc" ? "desc" : "asc" } : r))
+    );
+  };
+
+  const removeRule = (index: number) => {
+    setSortRules((rules) => rules.filter((_, i) => i !== index));
+  };
+
+  const resetSort = () => setSortRules(DEFAULT_SORT);
 
   const toggleStatut = (s: LotStatus) => {
     setStatuts((cur) =>
