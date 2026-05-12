@@ -187,26 +187,30 @@ export const LotsTable = ({ onSelectLot }: Props) => {
               </button>
             )}
           </div>
-          <Button
-            variant="outline"
-            onClick={() => setShowFilters((s) => !s)}
-            className="h-12 rounded-full border-border"
-          >
-            <SlidersHorizontal className="w-4 h-4 mr-2" />
-            Filtres
-            {isFiltered && (
-              <span className="ml-2 inline-flex items-center justify-center w-2 h-2 rounded-full bg-accent" />
-            )}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={exportCSV}
-            disabled={lots.length === 0}
-            className="h-12 rounded-full border-border"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Exporter ({lots.length})
-          </Button>
+          <div className="grid grid-cols-2 md:flex gap-2 md:gap-3">
+            <Button
+              variant="outline"
+              onClick={() => setShowFilters((s) => !s)}
+              className="h-12 rounded-full border-border"
+            >
+              <SlidersHorizontal className="w-4 h-4 mr-2" />
+              Filtres
+              {isFiltered && (
+                <span className="ml-2 inline-flex items-center justify-center w-2 h-2 rounded-full bg-accent" />
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={exportCSV}
+              disabled={lots.length === 0}
+              className="h-12 rounded-full border-border"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              <span className="hidden sm:inline">Exporter</span>
+              <span className="sm:hidden">CSV</span>
+              <span className="ml-1">({lots.length})</span>
+            </Button>
+          </div>
         </div>
 
         {/* Panneau de filtres */}
