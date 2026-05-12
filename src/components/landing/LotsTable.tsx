@@ -187,26 +187,30 @@ export const LotsTable = ({ onSelectLot }: Props) => {
               </button>
             )}
           </div>
-          <Button
-            variant="outline"
-            onClick={() => setShowFilters((s) => !s)}
-            className="h-12 rounded-full border-border"
-          >
-            <SlidersHorizontal className="w-4 h-4 mr-2" />
-            Filtres
-            {isFiltered && (
-              <span className="ml-2 inline-flex items-center justify-center w-2 h-2 rounded-full bg-accent" />
-            )}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={exportCSV}
-            disabled={lots.length === 0}
-            className="h-12 rounded-full border-border"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Exporter ({lots.length})
-          </Button>
+          <div className="grid grid-cols-2 md:flex gap-2 md:gap-3">
+            <Button
+              variant="outline"
+              onClick={() => setShowFilters((s) => !s)}
+              className="h-12 rounded-full border-border"
+            >
+              <SlidersHorizontal className="w-4 h-4 mr-2" />
+              Filtres
+              {isFiltered && (
+                <span className="ml-2 inline-flex items-center justify-center w-2 h-2 rounded-full bg-accent" />
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={exportCSV}
+              disabled={lots.length === 0}
+              className="h-12 rounded-full border-border"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              <span className="hidden sm:inline">Exporter</span>
+              <span className="sm:hidden">CSV</span>
+              <span className="ml-1">({lots.length})</span>
+            </Button>
+          </div>
         </div>
 
         {/* Panneau de filtres */}
@@ -319,8 +323,8 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           )}
         </div>
 
-        {/* Tableau */}
-        <div className="bg-background rounded-2xl border border-border overflow-hidden shadow-soft">
+        {/* Tableau (desktop) */}
+        <div className="hidden md:block bg-background rounded-2xl border border-border overflow-hidden shadow-soft">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -329,7 +333,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
                   <SortableTh label="Surface" sortKey="surface" rules={sortRules} onSort={handleSort} />
                   <SortableTh label="SP max" sortKey="sp" rules={sortRules} onSort={handleSort} className="hidden sm:table-cell" />
                   <SortableTh label="Prix" sortKey="prix" rules={sortRules} onSort={handleSort} />
-                  <th className="px-5 py-4 font-semibold hidden md:table-cell">Statut</th>
+                  <th className="px-5 py-4 font-semibold">Statut</th>
                   <th className="px-5 py-4 font-semibold text-right">Action</th>
                 </tr>
               </thead>
@@ -352,6 +356,23 @@ export const LotsTable = ({ onSelectLot }: Props) => {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Cartes (mobile) */}
+        <div className="md:hidden space-y-3">
+          {lots.length === 0 ? (
+            <div className="bg-background rounded-2xl border border-border p-8 text-center text-muted-foreground shadow-soft">
+              Aucun lot ne correspond à vos critères.
+              <button
+                onClick={resetFilters}
+                className="block mx-auto mt-3 text-accent font-medium hover:underline"
+              >
+                Réinitialiser les filtres
+              </button>
+            </div>
+          ) : (
+            lots.map((lot) => <LotCard key={lot.numero} lot={lot} onSelect={onSelectLot} />)
+          )}
         </div>
 
         <p className="mt-4 text-xs text-muted-foreground">
@@ -520,6 +541,54 @@ const LotRow = ({ lot, onSelect }: { lot: Lot; onSelect: (label: string) => void
         </Button>
       </td>
     </tr>
+  );
+};
+
+const LotCard = ({ lot, onSelect }: { lot: Lot; onSelect: (label: string) => void }) => {
+  const isReserved = lot.statut === "Réservé";
+  const prixM2 =
+    lot.prix !== null ? Math.round(lot.prix / lot.surface) : null;
+  return (
+    <div
+      className={`bg-background rounded-2xl border border-border p-4 shadow-soft transition-all ${
+        isReserved ? "opacity-60" : "active:scale-[0.99]"
+      }`}
+    >
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <div>
+          <div className="font-display text-xl font-semibold text-foreground leading-none">
+            Lot N° {lot.numero}
+          </div>
+          <div className="mt-1 text-sm text-muted-foreground">
+            {lot.surface} m² · SP max {lot.sp} m²
+          </div>
+        </div>
+        <StatusBadge statut={lot.statut} />
+      </div>
+
+      <div className="flex items-end justify-between gap-3 pt-3 border-t border-border">
+        <div>
+          <div className="text-2xl font-display font-semibold text-primary leading-none">
+            {formatPrix(lot.prix)}
+          </div>
+          {prixM2 !== null && (
+            <div className="mt-1 text-xs text-muted-foreground">
+              soit {prixM2.toLocaleString("fr-FR")} €/m²
+            </div>
+          )}
+        </div>
+        <Button
+          size="sm"
+          disabled={isReserved}
+          onClick={() =>
+            onSelect(`Lot ${lot.numero} · ${lot.surface} m² · ${formatPrix(lot.prix)}`)
+          }
+          className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full disabled:opacity-40 shrink-0"
+        >
+          {isReserved ? "Réservé" : "Je m'intéresse"}
+        </Button>
+      </div>
+    </div>
   );
 };
 
