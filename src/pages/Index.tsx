@@ -67,10 +67,13 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
+        <NumbersBlock />
         <Programme />
         <Atouts />
         <LotsTable onSelectLot={(label) => contactRef.current?.setLot(label)} />
         <Localisation />
+        <CommunesGrid />
+        <Testimonials />
         <Etapes />
         <FAQ />
         <ContactSection ref={contactRef} />
