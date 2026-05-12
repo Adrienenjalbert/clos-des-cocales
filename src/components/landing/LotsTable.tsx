@@ -359,7 +359,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
                     </td>
                   </tr>
                 ) : (
-                  lots.map((lot) => <LotRow key={lot.numero} lot={lot} onSelect={onSelectLot} />)
+                  lots.map((lot) => <LotRow key={lot.numero} lot={lot} onSelect={openInterest} />)
                 )}
               </tbody>
             </table>
@@ -379,7 +379,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
               </button>
             </div>
           ) : (
-            lots.map((lot) => <LotCard key={lot.numero} lot={lot} onSelect={onSelectLot} />)
+            lots.map((lot) => <LotCard key={lot.numero} lot={lot} onSelect={openInterest} />)
           )}
         </div>
 
