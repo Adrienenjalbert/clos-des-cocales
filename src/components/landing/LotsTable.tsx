@@ -388,6 +388,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           Disponibilités sous réserve de mise à jour.
         </p>
       </div>
+      <InterestModal open={modalOpen} onOpenChange={setModalOpen} lotLabel={modalLot} />
     </section>
   );
 };
