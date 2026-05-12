@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { track, buildLeadMessage } from "@/lib/analytics";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Nom requis").max(120),
@@ -37,22 +38,30 @@ export const LeadMagnet = ({ trigger, source = "lead_magnet_brochure" }: Props) 
       const errs: Record<string, string> = {};
       parsed.error.issues.forEach((i) => { errs[i.path[0] as string] = i.message; });
       setErrors(errs);
+      track("lead_validation_error", { source });
       return;
     }
     setLoading(true);
+    track("lead_submit", { source });
     const { error } = await supabase.from("leads").insert({
       name: parsed.data.name,
       email: parsed.data.email,
       consent: true,
       source,
+      message: buildLeadMessage("Demande brochure"),
     });
     setLoading(false);
-    if (error) { toast.error("Erreur, merci de réessayer."); return; }
+    if (error) {
+      toast.error("Erreur, merci de réessayer.");
+      track("lead_error", { source, error: error.message });
+      return;
+    }
+    track("lead_success", { source });
     setSuccess(true);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (o) track("lead_modal_open", { source }); }}>
       <DialogTrigger asChild>
         {trigger ?? (
           <Button variant="outline" className="rounded-full">
