@@ -376,3 +376,17 @@ export const VisitBooking = () => {
     </section>
   );
 };
+
+const RecapItem = ({
+  icon: Icon, label, value,
+}: { icon: React.ComponentType<{ className?: string }>; label: string; value: string }) => (
+  <div className="flex items-start gap-3 p-3 rounded-lg bg-secondary/30 border border-border">
+    <div className="w-9 h-9 shrink-0 rounded-lg bg-background border border-border flex items-center justify-center">
+      <Icon className="w-4 h-4 text-accent" />
+    </div>
+    <div className="min-w-0">
+      <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">{label}</div>
+      <div className="text-sm font-semibold text-foreground truncate">{value}</div>
+    </div>
+  </div>
+);
