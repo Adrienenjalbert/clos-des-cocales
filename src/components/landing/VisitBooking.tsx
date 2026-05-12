@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { z } from "zod";
 import { Loader2, CheckCircle2, Calendar, Clock, MapPin, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { track, buildLeadMessage } from "@/lib/analytics";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Nom requis").max(120),
