@@ -366,6 +366,47 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           </div>
         </div>
 
+        {/* Filtres + tri rapides (mobile uniquement) */}
+        <div className="md:hidden mb-3 space-y-2">
+          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-none">
+            {ALL_STATUTS.map((s) => {
+              const active = statuts.includes(s);
+              const count = LOTS.filter((l) => l.statut === s).length;
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => toggleStatut(s)}
+                  className={`shrink-0 px-3.5 py-2 rounded-full text-xs font-medium border transition-all ${
+                    active
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-background text-muted-foreground border-border"
+                  }`}
+                >
+                  {s} <span className="opacity-70">({count})</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-muted-foreground shrink-0">Trier&nbsp;:</label>
+            <select
+              value={sortRules[0] ? `${sortRules[0].key}:${sortRules[0].dir}` : ""}
+              onChange={(e) => {
+                const [key, dir] = e.target.value.split(":") as [SortKey, SortDir];
+                setSortRules([{ key, dir }]);
+              }}
+              className="flex-1 h-9 rounded-full border border-border bg-background px-3 text-xs"
+            >
+              <option value="prix:asc">Prix croissant</option>
+              <option value="prix:desc">Prix décroissant</option>
+              <option value="surface:asc">Surface croissante</option>
+              <option value="surface:desc">Surface décroissante</option>
+              <option value="numero:asc">N° de lot</option>
+            </select>
+          </div>
+        </div>
+
         {/* Cartes (mobile) */}
         <div className="md:hidden space-y-3">
           {lots.length === 0 ? (
