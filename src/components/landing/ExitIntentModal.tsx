@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { track, buildLeadMessage } from "@/lib/analytics";
 
 const STORAGE_KEY = "exit_intent_seen_v1";
 
