@@ -13,6 +13,7 @@ import { MobileCTA } from "@/components/landing/MobileCTA";
 import { StickyDesktopBar } from "@/components/landing/StickyDesktopBar";
 import { ExitIntentModal } from "@/components/landing/ExitIntentModal";
 import { VisitBooking } from "@/components/landing/VisitBooking";
+import { CommunesCompareBanner } from "@/components/landing/CommunesCompareBanner";
 import { NumbersBlock } from "@/components/premium/NumbersBlock";
 import { Testimonials } from "@/components/premium/Testimonials";
 import { CommunesGrid } from "@/components/premium/CommunesGrid";
@@ -75,6 +76,7 @@ const Index = () => {
         <Atouts />
         <LotsTable onSelectLot={(label) => contactRef.current?.setLot(label)} />
         <Localisation />
+        <CommunesCompareBanner />
         <CommunesGrid />
         <Testimonials />
         <Etapes />
