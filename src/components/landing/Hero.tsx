@@ -1,8 +1,10 @@
 import { ArrowRight, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroImg from "@/assets/hero-cocales.jpg";
 import { CONTACT } from "@/config/contact";
 import { LOTS_DISPONIBLES } from "@/data/lots";
+import { TrustStrip } from "@/components/premium/TrustStrip";
 
 export const Hero = () => {
   return (
@@ -13,45 +15,46 @@ export const Hero = () => {
         width={1920}
         height={1280}
         fetchPriority="high"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover scale-105"
       />
       <div className="absolute inset-0 bg-hero-gradient" />
 
-      <div className="container mx-auto relative z-10 pb-16 md:pb-24 pt-32 text-primary-foreground animate-fade-up">
-        <div className="max-w-3xl">
-          <span className="inline-flex items-center gap-2 bg-background/15 backdrop-blur-sm border border-background/20 text-background text-xs uppercase tracking-widest px-4 py-2 rounded-full mb-6">
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            Nouvelle grille de prix · Plus que {LOTS_DISPONIBLES} lots disponibles
+      <div className="container mx-auto relative z-10 pb-10 md:pb-16 pt-32 text-primary-foreground">
+        <div className="max-w-3xl animate-fade-up">
+          <span className="inline-flex items-center gap-2 bg-background/10 backdrop-blur-md border border-background/25 text-background text-[11px] uppercase tracking-[0.2em] px-4 py-2 rounded-full mb-6 font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+            Plus que {LOTS_DISPONIBLES} lots · Livraison immédiate
           </span>
 
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-medium leading-[1.05] text-background mb-6">
+          <h1 className="font-display text-[40px] md:text-7xl lg:text-[88px] font-medium leading-[0.98] text-background mb-6 text-balance">
             Construisez votre maison
             <br />
-            <span className="italic font-normal text-accent-soft">là où il fait bon vivre.</span>
+            <span className="editorial text-accent">là où il fait bon vivre.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-background/90 max-w-2xl mb-8 font-light leading-relaxed">
-            Terrains à bâtir viabilisés à Espondeilhan, au cœur du Languedoc — à 15 min
-            de Béziers. De 250 à 832 m², à partir de{" "}
-            <strong className="font-semibold text-accent-soft">99 900 €</strong>.
+          <p className="text-base md:text-xl text-background/85 max-w-2xl mb-8 font-light leading-relaxed">
+            29 terrains à bâtir viabilisés à Espondeilhan, au cœur du Languedoc — à 15 min
+            de Béziers. De 250 à 832 m², dès{" "}
+            <strong className="font-semibold text-background">99 900 €</strong> avec frais de
+            notaire réduits.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10">
             <Button
               asChild
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full text-base h-14 px-8 shadow-cta"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full text-base h-14 px-7 shadow-cta font-semibold"
             >
-              <a href="#contact">
-                Demander la brochure
+              <Link to="/programme#lots">
+                Voir les {LOTS_DISPONIBLES} lots
                 <ArrowRight className="ml-2 w-5 h-5" />
-              </a>
+              </Link>
             </Button>
             <Button
               asChild
               variant="outline"
               size="lg"
-              className="bg-background/10 backdrop-blur-sm border-background/40 text-background hover:bg-background hover:text-foreground rounded-full text-base h-14 px-8"
+              className="bg-background/10 backdrop-blur-md border-background/40 text-background hover:bg-background hover:text-foreground rounded-full text-base h-14 px-7"
             >
               <a href={`tel:${CONTACT.phoneTel}`}>
                 <Phone className="mr-2 w-5 h-5" />
@@ -60,21 +63,9 @@ export const Hero = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-4 max-w-2xl border-t border-background/20 pt-6">
-            <Stat label="À partir de" value="99 900 €" />
-            <Stat label="Surfaces" value="250–832 m²" />
-            <Stat label="Béziers" value="15 min" />
-            <Stat label="Frais notaire" value="3 % réduits" />
-          </div>
+          <TrustStrip variant="dark" />
         </div>
       </div>
     </section>
   );
 };
-
-const Stat = ({ label, value }: { label: string; value: string }) => (
-  <div>
-    <div className="text-xs uppercase tracking-wider text-background/70 mb-1">{label}</div>
-    <div className="font-display text-xl md:text-2xl font-medium text-background">{value}</div>
-  </div>
-);
