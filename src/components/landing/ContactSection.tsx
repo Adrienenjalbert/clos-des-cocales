@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { CONTACT, whatsappLink } from "@/config/contact";
+import { track, buildLeadMessage } from "@/lib/analytics";
 
 const leadSchema = z.object({
   name: z.string().trim().min(2, "Nom trop court").max(120, "Nom trop long"),
@@ -55,23 +56,26 @@ export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => 
         fieldErrors[i.path[0] as string] = i.message;
       });
       setErrors(fieldErrors);
+      track("lead_validation_error", { source: "landing_page" });
       return;
     }
 
     setLoading(true);
+    track("lead_submit", { source: "landing_page", lot: parsed.data.lot_interest || null });
     try {
       const { error } = await supabase.from("leads").insert({
         name: parsed.data.name,
         email: parsed.data.email,
         phone: parsed.data.phone || null,
         lot_interest: parsed.data.lot_interest || null,
-        message: parsed.data.message || null,
+        message: buildLeadMessage(parsed.data.message || null),
         consent: parsed.data.consent,
         source: "landing_page",
       });
 
       if (error) throw error;
 
+      track("lead_success", { source: "landing_page", lot: parsed.data.lot_interest || null });
       setSuccess(true);
       toast.success("Demande envoyée ! Nous vous recontactons sous 24 h.");
       setForm({
@@ -84,6 +88,7 @@ export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => 
       });
     } catch (err) {
       console.error("Lead submission error:", err);
+      track("lead_error", { source: "landing_page", error: (err as Error).message });
       toast.error("Une erreur est survenue. Merci d'utiliser le téléphone ou WhatsApp.");
     } finally {
       setLoading(false);

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { z } from "zod";
 import { Loader2, CheckCircle2, Calendar, Clock, MapPin, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { track, buildLeadMessage } from "@/lib/analytics";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Nom requis").max(120),
@@ -53,6 +54,35 @@ export const VisitBooking = () => {
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // Step 1 view event (fires once on mount / first visibility)
+  const viewedRef = useRef(false);
+  useEffect(() => {
+    if (viewedRef.current) return;
+    viewedRef.current = true;
+    track("visit_booking_view", { step: "mode" });
+  }, []);
+
+  // Track contact info focus once
+  const contactStartedRef = useRef(false);
+  const onContactFocus = () => {
+    if (contactStartedRef.current) return;
+    contactStartedRef.current = true;
+    track("visit_booking_step", { step: "contact_started", mode, date, slot });
+  };
+
+  const selectMode = (m: Mode) => {
+    setMode(m);
+    track("visit_booking_step", { step: "mode_selected", mode: m });
+  };
+  const selectDate = (v: string) => {
+    setDate(v);
+    track("visit_booking_step", { step: "date_selected", mode, date: v });
+  };
+  const selectSlot = (s: string) => {
+    setSlot(s);
+    track("visit_booking_step", { step: "slot_selected", mode, date, slot: s });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
@@ -61,20 +91,30 @@ export const VisitBooking = () => {
       const errs: Record<string, string> = {};
       parsed.error.issues.forEach((i) => { errs[i.path[0] as string] = i.message; });
       setErrors(errs);
+      track("visit_booking_step", { step: "validation_error", mode, date, slot });
       return;
     }
     setLoading(true);
-    const message = `Visite ${mode === "site" ? "sur site" : "en visio"} demandée pour le ${date} à ${slot}.`;
+    track("visit_booking_step", { step: "submit", mode, date, slot });
+    track("lead_submit", { source: `visit_booking_${mode}` });
+    const baseMessage = `Visite ${mode === "site" ? "sur site" : "en visio"} demandée pour le ${date} à ${slot}.`;
     const { error } = await supabase.from("leads").insert({
       name: parsed.data.name,
       email: parsed.data.email,
       phone: parsed.data.phone,
       consent: true,
-      message,
+      message: buildLeadMessage(baseMessage),
       source: `visit_booking_${mode}`,
     });
     setLoading(false);
-    if (error) { toast.error("Erreur, merci de réessayer."); return; }
+    if (error) {
+      toast.error("Erreur, merci de réessayer.");
+      track("visit_booking_step", { step: "error", mode, error: error.message });
+      track("lead_error", { source: `visit_booking_${mode}`, error: error.message });
+      return;
+    }
+    track("visit_booking_step", { step: "success", mode, date, slot });
+    track("lead_success", { source: `visit_booking_${mode}` });
     setSuccess(true);
   };
 
@@ -122,7 +162,7 @@ export const VisitBooking = () => {
                   <button
                     type="button"
                     key={o.v}
-                    onClick={() => setMode(o.v)}
+                    onClick={() => selectMode(o.v)}
                     className={`p-4 rounded-xl border text-left transition-all ${
                       active
                         ? "border-accent bg-accent/5 ring-2 ring-accent/20"
@@ -150,7 +190,7 @@ export const VisitBooking = () => {
                   <button
                     type="button"
                     key={v}
-                    onClick={() => setDate(v)}
+                    onClick={() => selectDate(v)}
                     className={`shrink-0 px-4 py-2.5 rounded-lg border text-sm transition-all ${
                       active
                         ? "border-accent bg-accent text-accent-foreground"
@@ -175,7 +215,7 @@ export const VisitBooking = () => {
                   <button
                     type="button"
                     key={s}
-                    onClick={() => setSlot(s)}
+                    onClick={() => selectSlot(s)}
                     className={`py-2.5 rounded-lg border text-sm transition-all ${
                       active
                         ? "border-accent bg-accent text-accent-foreground"
@@ -189,7 +229,7 @@ export const VisitBooking = () => {
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4 pt-2 border-t border-border">
+          <div className="grid sm:grid-cols-2 gap-4 pt-2 border-t border-border" onFocus={onContactFocus}>
             <div className="space-y-1.5 sm:col-span-2">
               <Label htmlFor="vb-name">Nom complet *</Label>
               <Input id="vb-name" value={name} onChange={(e) => setName(e.target.value)} maxLength={120} />

@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { track, buildLeadMessage } from "@/lib/analytics";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Nom requis").max(120),
@@ -40,6 +41,7 @@ export const InterestModal = ({ open, onOpenChange, lotLabel }: Props) => {
 
   const handleClose = (o: boolean) => {
     if (!o) setTimeout(reset, 200);
+    else track("lead_modal_open", { source: "interest_modal", lot: lotLabel ?? null });
     onOpenChange(o);
   };
 
@@ -51,9 +53,11 @@ export const InterestModal = ({ open, onOpenChange, lotLabel }: Props) => {
       const errs: Record<string, string> = {};
       parsed.error.issues.forEach((i) => { errs[i.path[0] as string] = i.message; });
       setErrors(errs);
+      track("lead_validation_error", { source: "interest_modal", lot: lotLabel ?? null });
       return;
     }
     setLoading(true);
+    track("lead_submit", { source: "interest_modal", lot: lotLabel ?? null });
     const { error } = await supabase.from("leads").insert({
       name: parsed.data.name,
       email: parsed.data.email,
@@ -61,12 +65,15 @@ export const InterestModal = ({ open, onOpenChange, lotLabel }: Props) => {
       lot_interest: lotLabel ?? null,
       consent: true,
       source: "interest_modal",
+      message: buildLeadMessage(`Intérêt lot: ${lotLabel ?? "—"}`),
     });
     setLoading(false);
     if (error) {
       toast.error("Une erreur est survenue. Merci de réessayer.");
+      track("lead_error", { source: "interest_modal", error: error.message });
       return;
     }
+    track("lead_success", { source: "interest_modal", lot: lotLabel ?? null });
     setSuccess(true);
   };
 
