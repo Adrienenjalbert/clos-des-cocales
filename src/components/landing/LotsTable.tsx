@@ -544,6 +544,54 @@ const LotRow = ({ lot, onSelect }: { lot: Lot; onSelect: (label: string) => void
   );
 };
 
+const LotCard = ({ lot, onSelect }: { lot: Lot; onSelect: (label: string) => void }) => {
+  const isReserved = lot.statut === "Réservé";
+  const prixM2 =
+    lot.prix !== null ? Math.round(lot.prix / lot.surface) : null;
+  return (
+    <div
+      className={`bg-background rounded-2xl border border-border p-4 shadow-soft transition-all ${
+        isReserved ? "opacity-60" : "active:scale-[0.99]"
+      }`}
+    >
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <div>
+          <div className="font-display text-xl font-semibold text-foreground leading-none">
+            Lot N° {lot.numero}
+          </div>
+          <div className="mt-1 text-sm text-muted-foreground">
+            {lot.surface} m² · SP max {lot.sp} m²
+          </div>
+        </div>
+        <StatusBadge statut={lot.statut} />
+      </div>
+
+      <div className="flex items-end justify-between gap-3 pt-3 border-t border-border">
+        <div>
+          <div className="text-2xl font-display font-semibold text-primary leading-none">
+            {formatPrix(lot.prix)}
+          </div>
+          {prixM2 !== null && (
+            <div className="mt-1 text-xs text-muted-foreground">
+              soit {prixM2.toLocaleString("fr-FR")} €/m²
+            </div>
+          )}
+        </div>
+        <Button
+          size="sm"
+          disabled={isReserved}
+          onClick={() =>
+            onSelect(`Lot ${lot.numero} · ${lot.surface} m² · ${formatPrix(lot.prix)}`)
+          }
+          className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full disabled:opacity-40 shrink-0"
+        >
+          {isReserved ? "Réservé" : "Je m'intéresse"}
+        </Button>
+      </div>
+    </div>
+  );
+};
+
 const StatusBadge = ({ statut }: { statut: LotStatus }) => {
   const styles = {
     Disponible: "bg-primary/10 text-primary",
