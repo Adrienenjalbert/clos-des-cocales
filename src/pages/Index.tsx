@@ -11,6 +11,8 @@ import { ContactSection, type ContactSectionHandle } from "@/components/landing/
 import { Footer } from "@/components/landing/Footer";
 import { MobileCTA } from "@/components/landing/MobileCTA";
 import { StickyDesktopBar } from "@/components/landing/StickyDesktopBar";
+import { ExitIntentModal } from "@/components/landing/ExitIntentModal";
+import { VisitBooking } from "@/components/landing/VisitBooking";
 import { NumbersBlock } from "@/components/premium/NumbersBlock";
 import { Testimonials } from "@/components/premium/Testimonials";
 import { CommunesGrid } from "@/components/premium/CommunesGrid";
