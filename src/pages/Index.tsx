@@ -10,6 +10,7 @@ import { FAQ } from "@/components/landing/FAQ";
 import { ContactSection, type ContactSectionHandle } from "@/components/landing/ContactSection";
 import { Footer } from "@/components/landing/Footer";
 import { MobileCTA } from "@/components/landing/MobileCTA";
+import { StickyDesktopBar } from "@/components/landing/StickyDesktopBar";
 import { NumbersBlock } from "@/components/premium/NumbersBlock";
 import { Testimonials } from "@/components/premium/Testimonials";
 import { CommunesGrid } from "@/components/premium/CommunesGrid";
