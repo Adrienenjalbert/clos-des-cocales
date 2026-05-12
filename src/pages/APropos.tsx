@@ -1,0 +1,70 @@
+import { Link } from "react-router-dom";
+import { SEOHead } from "@/components/seo/SEOHead";
+import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
+import { Button } from "@/components/ui/button";
+import { PROMOTEUR } from "@/data/promoteur";
+
+const APropos = () => (
+  <div className="min-h-screen bg-background">
+    <SEOHead
+      title={`À propos — ${PROMOTEUR.nom} | Aménageur de terrains à bâtir, Hérault`}
+      description={`${PROMOTEUR.nom} aménage et commercialise des lotissements de terrains à bâtir dans l'Hérault. Garantie financière d'achèvement, permis d'aménager, accompagnement personnalisé.`}
+      path="/a-propos"
+    />
+    <SiteHeader />
+    <main className="pt-28 pb-20">
+      <article className="container mx-auto max-w-3xl">
+        <span className="text-xs uppercase tracking-[0.2em] text-accent font-semibold">À propos</span>
+        <h1 className="font-display text-4xl md:text-5xl font-medium mt-3 leading-[1.1] text-balance">
+          {PROMOTEUR.nom}, aménageur de terrains à bâtir dans l'Hérault.
+        </h1>
+        <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
+          {PROMOTEUR.description}
+        </p>
+
+        <div className="mt-12 grid md:grid-cols-2 gap-4">
+          <Card label="Année de création" value={PROMOTEUR.anneeCreation} />
+          <Card label="Lots livrés à ce jour" value={`${PROMOTEUR.lotsLivres}+`} />
+          <Card label="Programmes en cours" value={PROMOTEUR.programmesEnCours} />
+          <Card label="Note clients" value={`${PROMOTEUR.noteClients} / 5`} />
+        </div>
+
+        <div className="mt-12 bg-secondary/40 border border-border rounded-2xl p-6 md:p-8">
+          <h2 className="font-display text-xl font-semibold text-foreground mb-4">Mentions légales</h2>
+          <dl className="grid sm:grid-cols-2 gap-y-3 gap-x-6 text-sm">
+            <Item k="Raison sociale" v={PROMOTEUR.raisonSociale} />
+            <Item k="RCS" v={PROMOTEUR.rcs} />
+            <Item k="N° SIRET" v={PROMOTEUR.siret} />
+            <Item k="Garantie financière d'achèvement" v={PROMOTEUR.garantieFinanciere} />
+            <Item k="N° permis d'aménager" v={PROMOTEUR.permisAmenager} />
+            <Item k="Assurance RC pro" v={PROMOTEUR.assuranceRC} />
+          </dl>
+        </div>
+
+        <div className="mt-12 text-center">
+          <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full">
+            <Link to="/#contact">Nous contacter</Link>
+          </Button>
+        </div>
+      </article>
+    </main>
+    <SiteFooter />
+  </div>
+);
+
+const Card = ({ label, value }: { label: string; value: string | number }) => (
+  <div className="bg-background border border-border rounded-2xl p-6">
+    <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{label}</div>
+    <div className="font-display text-3xl font-medium text-primary mt-2">{value}</div>
+  </div>
+);
+
+const Item = ({ k, v }: { k: string; v: string }) => (
+  <div>
+    <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{k}</dt>
+    <dd className="text-foreground font-medium">{v}</dd>
+  </div>
+);
+
+export default APropos;
