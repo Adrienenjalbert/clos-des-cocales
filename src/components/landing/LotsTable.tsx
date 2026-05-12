@@ -38,6 +38,13 @@ export const LotsTable = ({ onSelectLot }: Props) => {
   const [statuts, setStatuts] = useState<LotStatus[]>(["Disponible", "Option"]);
   const [sortRules, setSortRules] = useState<SortRule[]>(DEFAULT_SORT);
   const [showFilters, setShowFilters] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalLot, setModalLot] = useState<string | undefined>();
+
+  const openInterest = (label: string) => {
+    setModalLot(label);
+    setModalOpen(true);
+  };
 
   const lots = useMemo(() => {
     const q = search.trim().toLowerCase();
