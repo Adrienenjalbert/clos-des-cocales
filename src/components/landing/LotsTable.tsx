@@ -319,8 +319,8 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           )}
         </div>
 
-        {/* Tableau */}
-        <div className="bg-background rounded-2xl border border-border overflow-hidden shadow-soft">
+        {/* Tableau (desktop) */}
+        <div className="hidden md:block bg-background rounded-2xl border border-border overflow-hidden shadow-soft">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -329,7 +329,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
                   <SortableTh label="Surface" sortKey="surface" rules={sortRules} onSort={handleSort} />
                   <SortableTh label="SP max" sortKey="sp" rules={sortRules} onSort={handleSort} className="hidden sm:table-cell" />
                   <SortableTh label="Prix" sortKey="prix" rules={sortRules} onSort={handleSort} />
-                  <th className="px-5 py-4 font-semibold hidden md:table-cell">Statut</th>
+                  <th className="px-5 py-4 font-semibold">Statut</th>
                   <th className="px-5 py-4 font-semibold text-right">Action</th>
                 </tr>
               </thead>
@@ -352,6 +352,23 @@ export const LotsTable = ({ onSelectLot }: Props) => {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Cartes (mobile) */}
+        <div className="md:hidden space-y-3">
+          {lots.length === 0 ? (
+            <div className="bg-background rounded-2xl border border-border p-8 text-center text-muted-foreground shadow-soft">
+              Aucun lot ne correspond à vos critères.
+              <button
+                onClick={resetFilters}
+                className="block mx-auto mt-3 text-accent font-medium hover:underline"
+              >
+                Réinitialiser les filtres
+              </button>
+            </div>
+          ) : (
+            lots.map((lot) => <LotCard key={lot.numero} lot={lot} onSelect={onSelectLot} />)
+          )}
         </div>
 
         <p className="mt-4 text-xs text-muted-foreground">
