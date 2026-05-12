@@ -78,12 +78,14 @@ const Index = () => {
         <CommunesGrid />
         <Testimonials />
         <Etapes />
+        <VisitBooking />
         <FAQ />
         <ContactSection ref={contactRef} />
       </main>
       <Footer />
       <MobileCTA />
       <StickyDesktopBar />
+      <ExitIntentModal />
     </div>
   );
 };
