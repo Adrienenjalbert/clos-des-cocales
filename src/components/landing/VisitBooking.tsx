@@ -162,7 +162,7 @@ export const VisitBooking = () => {
                   <button
                     type="button"
                     key={o.v}
-                    onClick={() => setMode(o.v)}
+                    onClick={() => selectMode(o.v)}
                     className={`p-4 rounded-xl border text-left transition-all ${
                       active
                         ? "border-accent bg-accent/5 ring-2 ring-accent/20"
@@ -190,7 +190,7 @@ export const VisitBooking = () => {
                   <button
                     type="button"
                     key={v}
-                    onClick={() => setDate(v)}
+                    onClick={() => selectDate(v)}
                     className={`shrink-0 px-4 py-2.5 rounded-lg border text-sm transition-all ${
                       active
                         ? "border-accent bg-accent text-accent-foreground"
@@ -215,7 +215,7 @@ export const VisitBooking = () => {
                   <button
                     type="button"
                     key={s}
-                    onClick={() => setSlot(s)}
+                    onClick={() => selectSlot(s)}
                     className={`py-2.5 rounded-lg border text-sm transition-all ${
                       active
                         ? "border-accent bg-accent text-accent-foreground"
@@ -229,7 +229,7 @@ export const VisitBooking = () => {
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4 pt-2 border-t border-border">
+          <div className="grid sm:grid-cols-2 gap-4 pt-2 border-t border-border" onFocus={onContactFocus}>
             <div className="space-y-1.5 sm:col-span-2">
               <Label htmlFor="vb-name">Nom complet *</Label>
               <Input id="vb-name" value={name} onChange={(e) => setName(e.target.value)} maxLength={120} />
