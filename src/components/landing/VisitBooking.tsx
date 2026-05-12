@@ -120,15 +120,127 @@ export const VisitBooking = () => {
   };
 
   if (success) {
+    const dateLabel = new Date(date).toLocaleDateString("fr-FR", {
+      weekday: "long", day: "numeric", month: "long", year: "numeric",
+    });
+    const modeLabel = mode === "site" ? "Sur site à Espondeilhan" : "En visio (Google Meet)";
+    const waMessage = `Bonjour, je viens de réserver une visite ${mode === "site" ? "sur site" : "en visio"} le ${dateLabel} à ${slot}. Je m'appelle ${name}.`;
+
+    const downloadIcs = () => {
+      const [hh, mm] = slot.split(":").map(Number);
+      const start = new Date(date);
+      start.setHours(hh, mm, 0, 0);
+      const end = new Date(start.getTime() + 45 * 60 * 1000);
+      const fmt = (d: Date) =>
+        d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+      const ics = [
+        "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Clos des Cocales//FR",
+        "BEGIN:VEVENT",
+        `UID:${Date.now()}@clos-des-cocales`,
+        `DTSTAMP:${fmt(new Date())}`,
+        `DTSTART:${fmt(start)}`,
+        `DTEND:${fmt(end)}`,
+        `SUMMARY:Visite Le Clos des Cocales (${mode === "site" ? "sur site" : "visio"})`,
+        `DESCRIPTION:Visite ${modeLabel}. Conseiller: ${CONTACT.phone}`,
+        mode === "site" ? "LOCATION:Le Clos des Cocales, Espondeilhan, 34290" : "LOCATION:Visioconférence (lien envoyé par email)",
+        "END:VEVENT", "END:VCALENDAR",
+      ].join("\r\n");
+      const blob = new Blob([ics], { type: "text/calendar" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "visite-clos-des-cocales.ics"; a.click();
+      URL.revokeObjectURL(url);
+      track("visit_booking_step", { step: "ics_downloaded", mode, date, slot });
+    };
+
     return (
       <section id="visite" className="py-20 bg-secondary/30">
-        <div className="container mx-auto max-w-2xl text-center bg-background rounded-2xl border border-border p-10 shadow-card">
-          <CheckCircle2 className="w-16 h-16 mx-auto text-primary mb-4" />
-          <h2 className="font-display text-3xl mb-3">Demande de visite enregistrée</h2>
-          <p className="text-muted-foreground">
-            Notre conseiller vous confirme par téléphone le créneau du{" "}
-            <strong>{date}</strong> à <strong>{slot}</strong> sous 24 h ouvrées.
-          </p>
+        <div className="container mx-auto max-w-2xl">
+          <div className="bg-background rounded-2xl border border-border shadow-card overflow-hidden">
+            {/* Header */}
+            <div className="bg-gradient-to-br from-primary/10 via-accent/5 to-background px-8 pt-10 pb-8 text-center border-b border-border">
+              <div className="inline-flex w-16 h-16 rounded-full bg-primary/15 items-center justify-center mb-4">
+                <CheckCircle2 className="w-9 h-9 text-primary" />
+              </div>
+              <span className="inline-block text-xs uppercase tracking-[0.2em] text-accent font-semibold mb-2">
+                Confirmation
+              </span>
+              <h2 className="font-display text-3xl text-foreground mb-2">
+                Votre visite est réservée
+              </h2>
+              <p className="text-muted-foreground text-sm">
+                Bonjour <strong className="text-foreground">{name}</strong>, votre demande est
+                bien enregistrée. Notre conseiller vous confirme par téléphone sous 24 h ouvrées.
+              </p>
+            </div>
+
+            {/* Recap card */}
+            <div className="p-6 md:p-8 space-y-5">
+              <div className="grid sm:grid-cols-2 gap-3">
+                <RecapItem
+                  icon={mode === "site" ? MapPin : Video}
+                  label="Mode"
+                  value={modeLabel}
+                />
+                <RecapItem icon={Calendar} label="Date" value={dateLabel} />
+                <RecapItem icon={Clock} label="Créneau" value={slot} />
+                <RecapItem icon={Phone} label="Téléphone communiqué" value={phone} />
+              </div>
+
+              <div className="rounded-xl bg-secondary/40 border border-border p-4 text-xs text-muted-foreground leading-relaxed">
+                <strong className="text-foreground">Prochaine étape :</strong> vous recevrez un
+                email de confirmation à <strong className="text-foreground">{email}</strong>.
+                {mode === "visio" && " Le lien Google Meet vous sera envoyé la veille."}
+              </div>
+
+              {/* Quick contact */}
+              <div className="pt-2">
+                <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-3">
+                  Une question avant la visite&nbsp;? Contactez directement
+                </p>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <a
+                    href={whatsappLink(waMessage)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => track("visit_booking_contact", { channel: "whatsapp" })}
+                    className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/50 hover:bg-primary/5 transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#25D366]/10 text-[#25D366] flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <MessageCircle className="w-5 h-5" />
+                    </div>
+                    <div className="text-left">
+                      <div className="text-xs text-muted-foreground">WhatsApp</div>
+                      <div className="font-semibold text-foreground text-sm">Réponse rapide</div>
+                    </div>
+                  </a>
+                  <a
+                    href={`tel:${CONTACT.phoneTel}`}
+                    onClick={() => track("visit_booking_contact", { channel: "phone" })}
+                    className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/50 hover:bg-primary/5 transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div className="text-left">
+                      <div className="text-xs text-muted-foreground">Appeler</div>
+                      <div className="font-semibold text-foreground text-sm">{CONTACT.phone}</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={downloadIcs}
+                className="w-full h-11 rounded-full"
+              >
+                <CalendarPlus className="w-4 h-4 mr-2" />
+                Ajouter à mon calendrier (.ics)
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
     );
