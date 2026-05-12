@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { LOTS, formatPrix, type LotStatus, type Lot } from "@/data/lots";
+import { InterestModal } from "./InterestModal";
 
 type SortKey = "numero" | "surface" | "sp" | "prix";
 type SortDir = "asc" | "desc";
@@ -37,6 +38,13 @@ export const LotsTable = ({ onSelectLot }: Props) => {
   const [statuts, setStatuts] = useState<LotStatus[]>(["Disponible", "Option"]);
   const [sortRules, setSortRules] = useState<SortRule[]>(DEFAULT_SORT);
   const [showFilters, setShowFilters] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalLot, setModalLot] = useState<string | undefined>();
+
+  const openInterest = (label: string) => {
+    setModalLot(label);
+    setModalOpen(true);
+  };
 
   const lots = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -351,7 +359,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
                     </td>
                   </tr>
                 ) : (
-                  lots.map((lot) => <LotRow key={lot.numero} lot={lot} onSelect={onSelectLot} />)
+                  lots.map((lot) => <LotRow key={lot.numero} lot={lot} onSelect={openInterest} />)
                 )}
               </tbody>
             </table>
@@ -371,7 +379,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
               </button>
             </div>
           ) : (
-            lots.map((lot) => <LotCard key={lot.numero} lot={lot} onSelect={onSelectLot} />)
+            lots.map((lot) => <LotCard key={lot.numero} lot={lot} onSelect={openInterest} />)
           )}
         </div>
 
@@ -380,6 +388,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           Disponibilités sous réserve de mise à jour.
         </p>
       </div>
+      <InterestModal open={modalOpen} onOpenChange={setModalOpen} lotLabel={modalLot} />
     </section>
   );
 };
