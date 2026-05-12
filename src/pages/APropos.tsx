@@ -20,25 +20,25 @@ const APropos = () => (
           {PROMOTEUR.nom}, aménageur de terrains à bâtir dans l'Hérault.
         </h1>
         <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-          {PROMOTEUR.description}
+          {PROMOTEUR.baseline}. Nous concevons, viabilisons et commercialisons des lotissements de terrains à bâtir en accompagnant chaque acquéreur de la réservation à la signature de l'acte authentique.
         </p>
 
         <div className="mt-12 grid md:grid-cols-2 gap-4">
-          <Card label="Année de création" value={PROMOTEUR.anneeCreation} />
-          <Card label="Lots livrés à ce jour" value={`${PROMOTEUR.lotsLivres}+`} />
-          <Card label="Programmes en cours" value={PROMOTEUR.programmesEnCours} />
-          <Card label="Note clients" value={`${PROMOTEUR.noteClients} / 5`} />
+          <Card label="Années d'expérience" value={`${PROMOTEUR.anneesExperience}+`} />
+          <Card label="Programmes livrés" value={`${PROMOTEUR.programmesLivres}+`} />
+          <Card label="Lots commercialisés" value={`${PROMOTEUR.lotsCommercialises}+`} />
+          <Card label="Villes de présence" value={PROMOTEUR.villesPresence} />
         </div>
 
         <div className="mt-12 bg-secondary/40 border border-border rounded-2xl p-6 md:p-8">
           <h2 className="font-display text-xl font-semibold text-foreground mb-4">Mentions légales</h2>
           <dl className="grid sm:grid-cols-2 gap-y-3 gap-x-6 text-sm">
-            <Item k="Raison sociale" v={PROMOTEUR.raisonSociale} />
+            <Item k="Raison sociale" v={PROMOTEUR.nom} />
+            <Item k="Forme juridique" v={PROMOTEUR.formeJuridique} />
             <Item k="RCS" v={PROMOTEUR.rcs} />
-            <Item k="N° SIRET" v={PROMOTEUR.siret} />
+            <Item k="Siège social" v={PROMOTEUR.siegeSocial} />
             <Item k="Garantie financière d'achèvement" v={PROMOTEUR.garantieFinanciere} />
             <Item k="N° permis d'aménager" v={PROMOTEUR.permisAmenager} />
-            <Item k="Assurance RC pro" v={PROMOTEUR.assuranceRC} />
           </dl>
         </div>
 
