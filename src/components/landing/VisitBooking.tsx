@@ -54,6 +54,35 @@ export const VisitBooking = () => {
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // Step 1 view event (fires once on mount / first visibility)
+  const viewedRef = useRef(false);
+  useEffect(() => {
+    if (viewedRef.current) return;
+    viewedRef.current = true;
+    track("visit_booking_view", { step: "mode" });
+  }, []);
+
+  // Track contact info focus once
+  const contactStartedRef = useRef(false);
+  const onContactFocus = () => {
+    if (contactStartedRef.current) return;
+    contactStartedRef.current = true;
+    track("visit_booking_step", { step: "contact_started", mode, date, slot });
+  };
+
+  const selectMode = (m: Mode) => {
+    setMode(m);
+    track("visit_booking_step", { step: "mode_selected", mode: m });
+  };
+  const selectDate = (v: string) => {
+    setDate(v);
+    track("visit_booking_step", { step: "date_selected", mode, date: v });
+  };
+  const selectSlot = (s: string) => {
+    setSlot(s);
+    track("visit_booking_step", { step: "slot_selected", mode, date, slot: s });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
@@ -62,20 +91,30 @@ export const VisitBooking = () => {
       const errs: Record<string, string> = {};
       parsed.error.issues.forEach((i) => { errs[i.path[0] as string] = i.message; });
       setErrors(errs);
+      track("visit_booking_step", { step: "validation_error", mode, date, slot });
       return;
     }
     setLoading(true);
-    const message = `Visite ${mode === "site" ? "sur site" : "en visio"} demandée pour le ${date} à ${slot}.`;
+    track("visit_booking_step", { step: "submit", mode, date, slot });
+    track("lead_submit", { source: `visit_booking_${mode}` });
+    const baseMessage = `Visite ${mode === "site" ? "sur site" : "en visio"} demandée pour le ${date} à ${slot}.`;
     const { error } = await supabase.from("leads").insert({
       name: parsed.data.name,
       email: parsed.data.email,
       phone: parsed.data.phone,
       consent: true,
-      message,
+      message: buildLeadMessage(baseMessage),
       source: `visit_booking_${mode}`,
     });
     setLoading(false);
-    if (error) { toast.error("Erreur, merci de réessayer."); return; }
+    if (error) {
+      toast.error("Erreur, merci de réessayer.");
+      track("visit_booking_step", { step: "error", mode, error: error.message });
+      track("lead_error", { source: `visit_booking_${mode}`, error: error.message });
+      return;
+    }
+    track("visit_booking_step", { step: "success", mode, date, slot });
+    track("lead_success", { source: `visit_booking_${mode}` });
     setSuccess(true);
   };
 
