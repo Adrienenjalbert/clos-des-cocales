@@ -81,6 +81,7 @@ const Index = () => {
       </main>
       <Footer />
       <MobileCTA />
+      <StickyDesktopBar />
     </div>
   );
 };
