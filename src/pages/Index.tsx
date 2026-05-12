@@ -10,6 +10,9 @@ import { FAQ } from "@/components/landing/FAQ";
 import { ContactSection, type ContactSectionHandle } from "@/components/landing/ContactSection";
 import { Footer } from "@/components/landing/Footer";
 import { MobileCTA } from "@/components/landing/MobileCTA";
+import { NumbersBlock } from "@/components/premium/NumbersBlock";
+import { Testimonials } from "@/components/premium/Testimonials";
+import { CommunesGrid } from "@/components/premium/CommunesGrid";
 
 const Index = () => {
   const contactRef = useRef<ContactSectionHandle>(null);
@@ -64,10 +67,13 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
+        <NumbersBlock />
         <Programme />
         <Atouts />
         <LotsTable onSelectLot={(label) => contactRef.current?.setLot(label)} />
         <Localisation />
+        <CommunesGrid />
+        <Testimonials />
         <Etapes />
         <FAQ />
         <ContactSection ref={contactRef} />
