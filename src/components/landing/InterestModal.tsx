@@ -41,6 +41,7 @@ export const InterestModal = ({ open, onOpenChange, lotLabel }: Props) => {
 
   const handleClose = (o: boolean) => {
     if (!o) setTimeout(reset, 200);
+    else track("lead_modal_open", { source: "interest_modal", lot: lotLabel ?? null });
     onOpenChange(o);
   };
 
