@@ -32,22 +32,20 @@ export const ExitIntentModal = () => {
     if (sessionStorage.getItem(STORAGE_KEY)) return;
 
     let triggered = false;
-    const trigger = () => {
+    const trigger = (cause: "mouseleave" | "timer") => {
       if (triggered) return;
       triggered = true;
       sessionStorage.setItem(STORAGE_KEY, "1");
+      track("exit_intent_triggered", { cause });
       setOpen(true);
     };
 
     const onMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0) trigger();
+      if (e.clientY <= 0) trigger("mouseleave");
     };
 
-    // Desktop: exit intent
     document.addEventListener("mouseleave", onMouseLeave);
-
-    // Mobile fallback: after 35s of activity
-    const timer = window.setTimeout(trigger, 35000);
+    const timer = window.setTimeout(() => trigger("timer"), 35000);
 
     return () => {
       document.removeEventListener("mouseleave", onMouseLeave);
@@ -63,17 +61,25 @@ export const ExitIntentModal = () => {
       const errs: Record<string, string> = {};
       parsed.error.issues.forEach((i) => { errs[i.path[0] as string] = i.message; });
       setErrors(errs);
+      track("lead_validation_error", { source: "exit_intent" });
       return;
     }
     setLoading(true);
+    track("lead_submit", { source: "exit_intent" });
     const { error } = await supabase.from("leads").insert({
       name: parsed.data.name,
       email: parsed.data.email,
       consent: true,
       source: "exit_intent",
+      message: buildLeadMessage("Demande grille des prix (exit intent)"),
     });
     setLoading(false);
-    if (error) { toast.error("Erreur, merci de réessayer."); return; }
+    if (error) {
+      toast.error("Erreur, merci de réessayer.");
+      track("lead_error", { source: "exit_intent", error: error.message });
+      return;
+    }
+    track("lead_success", { source: "exit_intent" });
     setSuccess(true);
   };
 
