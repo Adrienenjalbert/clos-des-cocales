@@ -1,5 +1,5 @@
 // Source: https://www.sudimmocatalogue.fr/programmes/le-clos-des-cocales/
-export type LotStatus = "Disponible" | "Option" | "Réservé";
+export type LotStatus = "Disponible" | "Option" | "Réservé" | "Vendu";
 
 export interface Lot {
   numero: number;
