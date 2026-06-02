@@ -373,7 +373,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-none">
             {ALL_STATUTS.map((s) => {
               const active = statuts.includes(s);
-              const count = LOTS.filter((l) => l.statut === s).length;
+              const count = liveLots.filter((l) => l.statut === s).length;
               return (
                 <button
                   key={s}
