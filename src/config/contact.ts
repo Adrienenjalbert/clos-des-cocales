@@ -1,10 +1,9 @@
-// Coordonnées de contact — à personnaliser
-// Remplacez par vos vraies coordonnées
+// Coordonnées de contact
 export const CONTACT = {
-  phone: "+33 4 67 00 00 00", // <-- À REMPLACER
-  phoneTel: "+33467000000",
-  whatsapp: "33600000000", // <-- À REMPLACER (sans le +)
-  email: "contact@clos-des-cocales.fr",
+  phone: "+33 6 83 42 13 66",
+  phoneTel: "+33683421366",
+  whatsapp: "33683421366",
+  email: "s1tjm65@gmail.com",
   programName: "Le Clos des Cocales",
   location: "Espondeilhan, Hérault (34)",
   sourceUrl: "https://www.sudimmocatalogue.fr/programmes/le-clos-des-cocales/",
