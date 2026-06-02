@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { LOTS, formatPrix, type LotStatus, type Lot } from "@/data/lots";
+import { useLots } from "@/hooks/useLots";
 import { InterestModal } from "./InterestModal";
 
 type SortKey = "numero" | "surface" | "sp" | "prix";
