@@ -50,6 +50,39 @@ export type Database = {
         }
         Relationships: []
       }
+      lots: {
+        Row: {
+          created_at: string
+          id: string
+          numero: number
+          prix: number | null
+          sp: number
+          statut: Database["public"]["Enums"]["lot_statut"]
+          surface: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          numero: number
+          prix?: number | null
+          sp: number
+          statut?: Database["public"]["Enums"]["lot_statut"]
+          surface: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          numero?: number
+          prix?: number | null
+          sp?: number
+          statut?: Database["public"]["Enums"]["lot_statut"]
+          surface?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -58,7 +91,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      lot_statut: "disponible" | "option" | "reserve" | "vendu"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -185,6 +218,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      lot_statut: ["disponible", "option", "reserve", "vendu"],
+    },
   },
 } as const
