@@ -324,7 +324,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           <span>
             <strong className="text-foreground">{lots.length}</strong> lot
             {lots.length > 1 ? "s" : ""} affiché{lots.length > 1 ? "s" : ""} sur{" "}
-            {LOTS.length}
+            {liveLots.length}
           </span>
           {sortRules.length > 1 && (
             <span className="hidden sm:inline text-xs">
