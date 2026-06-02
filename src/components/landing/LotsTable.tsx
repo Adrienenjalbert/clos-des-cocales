@@ -33,6 +33,7 @@ const SURFACE_MAX = Math.max(...LOTS.map((l) => l.surface));
 const ALL_STATUTS: LotStatus[] = ["Disponible", "Option", "Réservé"];
 
 export const LotsTable = ({ onSelectLot }: Props) => {
+  const { lots: liveLots } = useLots();
   const [search, setSearch] = useState("");
   const [prixRange, setPrixRange] = useState<[number, number]>([PRIX_MIN, PRIX_MAX]);
   const [surfaceRange, setSurfaceRange] = useState<[number, number]>([SURFACE_MIN, SURFACE_MAX]);
