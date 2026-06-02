@@ -50,7 +50,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
 
   const lots = useMemo(() => {
     const q = search.trim().toLowerCase();
-    const arr = LOTS.filter((l) => {
+    const arr = liveLots.filter((l) => {
       if (!statuts.includes(l.statut)) return false;
       if (l.surface < surfaceRange[0] || l.surface > surfaceRange[1]) return false;
       if (l.prix !== null) {
@@ -72,7 +72,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
       }
       return 0;
     });
-  }, [search, prixRange, surfaceRange, statuts, sortRules]);
+  }, [search, prixRange, surfaceRange, statuts, sortRules, liveLots]);
 
   const handleSort = (key: SortKey) => {
     setSortRules((rules) => {
