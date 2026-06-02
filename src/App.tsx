@@ -10,6 +10,8 @@ import SimulateurPret from "./pages/SimulateurPret.tsx";
 import BudgetTotal from "./pages/BudgetTotal.tsx";
 import Guide from "./pages/Guide.tsx";
 import APropos from "./pages/APropos.tsx";
+import Auth from "./pages/Auth.tsx";
+import AdminLots from "./pages/AdminLots.tsx";
 
 const queryClient = new QueryClient();
 
