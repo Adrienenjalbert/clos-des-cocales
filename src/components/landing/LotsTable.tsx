@@ -286,7 +286,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
                             : "bg-background text-muted-foreground border-border hover:border-primary/40"
                         }`}
                       >
-                        {s} ({LOTS.filter((l) => l.statut === s).length})
+                        {s} ({liveLots.filter((l) => l.statut === s).length})
                       </button>
                     );
                   })}
