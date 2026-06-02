@@ -12,5 +12,4 @@ Allow: /
 
 User-agent: *
 Allow: /
-Sitemap: 
-Sitemap: https://clos-des-cocales.lovable.app/sitemap.xml
+Sitemap: https://clos-des-cocales.fr/sitemap.xml

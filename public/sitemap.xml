@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://clos-des-cocales.lovable.app/</loc>
+    <loc>https://clos-des-cocales.fr/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/programme</loc>
+    <loc>https://clos-des-cocales.fr/programme</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/outils/simulateur-pret</loc>
+    <loc>https://clos-des-cocales.fr/outils/simulateur-pret</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/outils/budget-total</loc>
+    <loc>https://clos-des-cocales.fr/outils/budget-total</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/guide/acheter-terrain-a-batir</loc>
+    <loc>https://clos-des-cocales.fr/guide/acheter-terrain-a-batir</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/a-propos</loc>
+    <loc>https://clos-des-cocales.fr/a-propos</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/terrain-a-batir/beziers</loc>
+    <loc>https://clos-des-cocales.fr/terrain-a-batir/beziers</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/terrain-a-batir/pezenas</loc>
+    <loc>https://clos-des-cocales.fr/terrain-a-batir/pezenas</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/terrain-a-batir/servian</loc>
+    <loc>https://clos-des-cocales.fr/terrain-a-batir/servian</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/terrain-a-batir/magalas</loc>
+    <loc>https://clos-des-cocales.fr/terrain-a-batir/magalas</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/terrain-a-batir/boujan-sur-libron</loc>
+    <loc>https://clos-des-cocales.fr/terrain-a-batir/boujan-sur-libron</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/terrain-a-batir/lieuran-les-beziers</loc>
+    <loc>https://clos-des-cocales.fr/terrain-a-batir/lieuran-les-beziers</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/terrain-a-batir/bassan</loc>
+    <loc>https://clos-des-cocales.fr/terrain-a-batir/bassan</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://clos-des-cocales.lovable.app/terrain-a-batir/coulobres</loc>
+    <loc>https://clos-des-cocales.fr/terrain-a-batir/coulobres</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

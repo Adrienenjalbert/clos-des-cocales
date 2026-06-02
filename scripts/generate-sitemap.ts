@@ -3,7 +3,7 @@ import { writeFileSync } from "fs";
 import { resolve } from "path";
 import { COMMUNES } from "../src/data/communes";
 
-const BASE_URL = "https://clos-des-cocales.lovable.app";
+const BASE_URL = "https://clos-des-cocales.fr";
 
 interface Entry { path: string; changefreq?: string; priority?: string }
 
