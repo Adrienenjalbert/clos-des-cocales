@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { LOTS, formatPrix, type LotStatus, type Lot } from "@/data/lots";
+import { useLots } from "@/hooks/useLots";
 import { InterestModal } from "./InterestModal";
 
 type SortKey = "numero" | "surface" | "sp" | "prix";
@@ -32,6 +33,7 @@ const SURFACE_MAX = Math.max(...LOTS.map((l) => l.surface));
 const ALL_STATUTS: LotStatus[] = ["Disponible", "Option", "Réservé"];
 
 export const LotsTable = ({ onSelectLot }: Props) => {
+  const { lots: liveLots } = useLots();
   const [search, setSearch] = useState("");
   const [prixRange, setPrixRange] = useState<[number, number]>([PRIX_MIN, PRIX_MAX]);
   const [surfaceRange, setSurfaceRange] = useState<[number, number]>([SURFACE_MIN, SURFACE_MAX]);
@@ -48,7 +50,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
 
   const lots = useMemo(() => {
     const q = search.trim().toLowerCase();
-    const arr = LOTS.filter((l) => {
+    const arr = liveLots.filter((l) => {
       if (!statuts.includes(l.statut)) return false;
       if (l.surface < surfaceRange[0] || l.surface > surfaceRange[1]) return false;
       if (l.prix !== null) {
@@ -70,7 +72,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
       }
       return 0;
     });
-  }, [search, prixRange, surfaceRange, statuts, sortRules]);
+  }, [search, prixRange, surfaceRange, statuts, sortRules, liveLots]);
 
   const handleSort = (key: SortKey) => {
     setSortRules((rules) => {
@@ -284,7 +286,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
                             : "bg-background text-muted-foreground border-border hover:border-primary/40"
                         }`}
                       >
-                        {s} ({LOTS.filter((l) => l.statut === s).length})
+                        {s} ({liveLots.filter((l) => l.statut === s).length})
                       </button>
                     );
                   })}
@@ -322,7 +324,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           <span>
             <strong className="text-foreground">{lots.length}</strong> lot
             {lots.length > 1 ? "s" : ""} affiché{lots.length > 1 ? "s" : ""} sur{" "}
-            {LOTS.length}
+            {liveLots.length}
           </span>
           {sortRules.length > 1 && (
             <span className="hidden sm:inline text-xs">
@@ -371,7 +373,7 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-none">
             {ALL_STATUTS.map((s) => {
               const active = statuts.includes(s);
-              const count = LOTS.filter((l) => l.statut === s).length;
+              const count = liveLots.filter((l) => l.statut === s).length;
               return (
                 <button
                   key={s}
