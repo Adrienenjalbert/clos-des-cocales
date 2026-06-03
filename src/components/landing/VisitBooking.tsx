@@ -114,6 +114,13 @@ export const VisitBooking = () => {
       track("lead_error", { source: `visit_booking_${mode}`, error: error.message });
       return;
     }
+    sendLeadEmails({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      message: baseMessage,
+      source: `visit_booking_${mode}`,
+    });
     track("visit_booking_step", { step: "success", mode, date, slot });
     track("lead_success", { source: `visit_booking_${mode}` });
     setSuccess(true);

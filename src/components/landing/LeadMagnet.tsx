@@ -1,3 +1,4 @@
+import { sendLeadEmails } from "@/lib/sendLeadEmails";
 import { useState } from "react";
 import { z } from "zod";
 import { Loader2, Download, CheckCircle2, FileText } from "lucide-react";
@@ -56,6 +57,12 @@ export const LeadMagnet = ({ trigger, source = "lead_magnet_brochure" }: Props) 
       track("lead_error", { source, error: error.message });
       return;
     }
+    sendLeadEmails({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      message: "Demande brochure",
+      source,
+    });
     track("lead_success", { source });
     setSuccess(true);
   };

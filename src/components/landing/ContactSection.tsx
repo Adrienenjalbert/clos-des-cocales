@@ -1,3 +1,4 @@
+import { sendLeadEmails } from "@/lib/sendLeadEmails";
 import { useState, forwardRef, useImperativeHandle } from "react";
 import { z } from "zod";
 import { Phone, MessageCircle, Mail, Send, Loader2, CheckCircle2 } from "lucide-react";
@@ -74,6 +75,15 @@ export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => 
       });
 
       if (error) throw error;
+
+      sendLeadEmails({
+        name: parsed.data.name,
+        email: parsed.data.email,
+        phone: parsed.data.phone,
+        lot_interest: parsed.data.lot_interest,
+        message: parsed.data.message,
+        source: "landing_page",
+      });
 
       track("lead_success", { source: "landing_page", lot: parsed.data.lot_interest || null });
       setSuccess(true);
