@@ -75,6 +75,15 @@ export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => 
 
       if (error) throw error;
 
+      sendLeadEmails({
+        name: parsed.data.name,
+        email: parsed.data.email,
+        phone: parsed.data.phone,
+        lot_interest: parsed.data.lot_interest,
+        message: parsed.data.message,
+        source: "landing_page",
+      });
+
       track("lead_success", { source: "landing_page", lot: parsed.data.lot_interest || null });
       setSuccess(true);
       toast.success("Demande envoyée ! Nous vous recontactons sous 24 h.");

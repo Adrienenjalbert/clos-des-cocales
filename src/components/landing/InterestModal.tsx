@@ -73,6 +73,14 @@ export const InterestModal = ({ open, onOpenChange, lotLabel }: Props) => {
       track("lead_error", { source: "interest_modal", error: error.message });
       return;
     }
+    sendLeadEmails({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      lot_interest: lotLabel ?? undefined,
+      message: `Intérêt lot: ${lotLabel ?? "—"}`,
+      source: "interest_modal",
+    });
     track("lead_success", { source: "interest_modal", lot: lotLabel ?? null });
     setSuccess(true);
   };

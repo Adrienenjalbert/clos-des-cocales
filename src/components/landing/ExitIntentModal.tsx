@@ -79,6 +79,12 @@ export const ExitIntentModal = () => {
       track("lead_error", { source: "exit_intent", error: error.message });
       return;
     }
+    sendLeadEmails({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      message: "Demande grille des prix (exit intent)",
+      source: "exit_intent",
+    });
     track("lead_success", { source: "exit_intent" });
     setSuccess(true);
   };
