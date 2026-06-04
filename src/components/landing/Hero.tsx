@@ -5,6 +5,7 @@ import heroImg from "@/assets/hero-cocales.jpg";
 import { CONTACT } from "@/config/contact";
 import { LOTS_DISPONIBLES } from "@/data/lots";
 import { TrustStrip } from "@/components/premium/TrustStrip";
+import { track } from "@/lib/analytics";
 
 export const Hero = () => {
   return (
