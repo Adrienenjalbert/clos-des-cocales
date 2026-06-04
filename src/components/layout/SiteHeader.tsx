@@ -3,6 +3,7 @@ import { Phone, MapPin, Menu, X, ChevronDown } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/config/contact";
+import logoCC from "@/assets/logo-cc.png";
 import { COMMUNES } from "@/data/communes";
 import { track } from "@/lib/analytics";
 
@@ -62,13 +63,19 @@ export const SiteHeader = () => {
       <div className="container mx-auto flex items-center justify-between py-3.5">
         <Link to="/" className="flex items-center gap-2.5 group shrink-0">
           <div
-            className={`w-10 h-10 rounded-md ${
-              transparent ? "bg-background/15 backdrop-blur-sm border border-background/30" : "bg-primary"
-            } flex items-center justify-center font-display text-lg font-semibold ${
-              transparent ? "text-background" : "text-primary-foreground"
+            className={`w-10 h-10 rounded-md flex items-center justify-center overflow-hidden ${
+              transparent
+                ? "bg-background/15 backdrop-blur-sm border border-background/30"
+                : "bg-background border border-border"
             }`}
           >
-            C
+            <img
+              src={logoCC}
+              alt="Le Clos des Cocales"
+              width={40}
+              height={40}
+              className={`w-8 h-8 object-contain ${transparent ? "brightness-0 invert" : ""}`}
+            />
           </div>
           <div className="leading-tight">
             <div
