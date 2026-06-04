@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/config/contact";
 import { COMMUNES } from "@/data/communes";
+import { track } from "@/lib/analytics";
 
 const NAV: { to: string; label: string; children?: { to: string; label: string }[] }[] = [
   { to: "/programme", label: "Le programme" },
@@ -141,6 +142,7 @@ export const SiteHeader = () => {
         <div className="hidden md:flex items-center gap-3 shrink-0">
           <a
             href={`tel:${CONTACT.phoneTel}`}
+            onClick={() => track("click_phone", { location: "site_header_desktop" })}
             className={`text-sm font-medium hidden xl:flex items-center gap-2 transition-colors ${
               transparent ? "text-background hover:text-accent" : "text-foreground hover:text-primary"
             }`}
@@ -152,7 +154,9 @@ export const SiteHeader = () => {
             asChild
             className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full shadow-cta"
           >
-            <Link to="/contact">Brochure & visite</Link>
+            <Link to="/contact" onClick={() => track("click_brochure", { location: "site_header_desktop" })}>
+              Brochure & visite
+            </Link>
           </Button>
         </div>
 
@@ -206,6 +210,7 @@ export const SiteHeader = () => {
             )}
             <a
               href={`tel:${CONTACT.phoneTel}`}
+              onClick={() => track("click_phone", { location: "site_header_mobile" })}
               className="text-base font-medium text-primary flex items-center gap-2 py-3"
             >
               <Phone className="w-4 h-4" />
@@ -215,7 +220,9 @@ export const SiteHeader = () => {
               asChild
               className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full mt-2"
             >
-              <Link to="/contact">Brochure & visite</Link>
+              <Link to="/contact" onClick={() => track("click_brochure", { location: "site_header_mobile" })}>
+                Brochure & visite
+              </Link>
             </Button>
           </div>
         </div>

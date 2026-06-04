@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { CONTACT } from "@/config/contact";
 import { COMMUNES } from "@/data/communes";
 import { PROMOTEUR } from "@/data/promoteur";
+import { track } from "@/lib/analytics";
 
 export const SiteFooter = () => {
   return (
@@ -57,12 +58,20 @@ export const SiteFooter = () => {
             </div>
             <div className="space-y-2.5 text-sm">
               <div>
-                <a href={`tel:${CONTACT.phoneTel}`} className="hover:text-primary-foreground">
+                <a
+                  href={`tel:${CONTACT.phoneTel}`}
+                  onClick={() => track("click_phone", { location: "footer" })}
+                  className="hover:text-primary-foreground"
+                >
                   {CONTACT.phone}
                 </a>
               </div>
               <div>
-                <a href={`mailto:${CONTACT.email}`} className="hover:text-primary-foreground">
+                <a
+                  href={`mailto:${CONTACT.email}`}
+                  onClick={() => track("click_email", { location: "footer" })}
+                  className="hover:text-primary-foreground"
+                >
                   {CONTACT.email}
                 </a>
               </div>
