@@ -1,5 +1,6 @@
 import { sendLeadEmails } from "@/lib/sendLeadEmails";
 import { useState, forwardRef, useImperativeHandle } from "react";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Phone, MessageCircle, Mail, Send, Loader2, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
