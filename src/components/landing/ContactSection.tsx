@@ -88,16 +88,13 @@ export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => 
       });
 
       track("lead_success", { source: "landing_page", lot: parsed.data.lot_interest || null });
-      setSuccess(true);
       toast.success("Demande envoyée ! Nous vous recontactons sous 24 h.");
-      setForm({
-        name: "",
-        email: "",
-        phone: "",
-        lot_interest: "",
-        message: "",
-        consent: false,
+      const qs = new URLSearchParams({
+        name: parsed.data.name.split(" ")[0] || "",
+        ...(parsed.data.lot_interest ? { lot: parsed.data.lot_interest } : {}),
       });
+      navigate(`/merci?${qs.toString()}`);
+      return;
     } catch (err) {
       console.error("Lead submission error:", err);
       track("lead_error", { source: "landing_page", error: (err as Error).message });
