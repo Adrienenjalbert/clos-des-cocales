@@ -11,7 +11,10 @@ import BudgetTotal from "./pages/BudgetTotal.tsx";
 import Guide from "./pages/Guide.tsx";
 import APropos from "./pages/APropos.tsx";
 import Auth from "./pages/Auth.tsx";
+import AdminLayout from "./components/admin/AdminLayout.tsx";
+import AdminDashboard from "./pages/admin/Dashboard.tsx";
 import AdminLots from "./pages/AdminLots.tsx";
+import AdminLeads from "./pages/admin/Leads.tsx";
 import Contact from "./pages/Contact.tsx";
 import Merci from "./pages/Merci.tsx";
 
@@ -32,7 +35,11 @@ const App = () => (
           <Route path="/guide/acheter-terrain-a-batir" element={<Guide />} />
           <Route path="/a-propos" element={<APropos />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/admin/lots" element={<AdminLots />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="lots" element={<AdminLots />} />
+            <Route path="leads" element={<AdminLeads />} />
+          </Route>
           <Route path="/contact" element={<Contact />} />
           <Route path="/merci" element={<Merci />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

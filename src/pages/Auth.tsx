@@ -16,9 +16,17 @@ const Auth = () => {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate("/admin/lots", { replace: true });
+      if (data.session) navigate("/admin", { replace: true });
     });
   }, [navigate]);
+
+  const bootstrapAdmin = async () => {
+    try {
+      await supabase.functions.invoke("claim-admin");
+    } catch (e) {
+      console.warn("claim-admin failed", e);
+    }
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,15 +34,24 @@ const Auth = () => {
     if (mode === "login") {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) toast.error(error.message);
-      else navigate("/admin/lots", { replace: true });
+      else {
+        await bootstrapAdmin();
+        navigate("/admin", { replace: true });
+      }
     } else {
-      const { error } = await supabase.auth.signUp({
+      const { error, data } = await supabase.auth.signUp({
         email,
         password,
-        options: { emailRedirectTo: `${window.location.origin}/admin/lots` },
+        options: { emailRedirectTo: `${window.location.origin}/admin` },
       });
       if (error) toast.error(error.message);
-      else toast.success("Compte créé. Vérifiez votre email pour confirmer.");
+      else if (data.session) {
+        await bootstrapAdmin();
+        toast.success("Compte créé.");
+        navigate("/admin", { replace: true });
+      } else {
+        toast.success("Compte créé. Vérifiez votre email pour confirmer.");
+      }
     }
     setLoading(false);
   };
