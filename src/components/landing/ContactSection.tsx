@@ -176,7 +176,7 @@ export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => 
                     {CONTACT.email}
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
 
