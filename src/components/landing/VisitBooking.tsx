@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { track, buildLeadMessage } from "@/lib/analytics";
 import { CONTACT, whatsappLink } from "@/config/contact";
+import { sendLeadEmails } from "@/lib/sendLeadEmails";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Nom requis").max(120),
