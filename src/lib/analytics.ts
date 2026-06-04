@@ -23,6 +23,7 @@ const LAST_KEY = "utm_last_touch_v1";
 declare global {
   interface Window {
     dataLayer?: Record<string, unknown>[];
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
@@ -85,6 +86,9 @@ export const track = (event: string, props: Record<string, unknown> = {}) => {
   };
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(payload);
+  if (typeof window.gtag === "function") {
+    window.gtag("event", event, props);
+  }
   if (import.meta.env.DEV) {
     // eslint-disable-next-line no-console
     console.debug("[analytics]", event, payload);
