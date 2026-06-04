@@ -27,6 +27,7 @@ export interface ContactSectionHandle {
 }
 
 export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     email: "",
