@@ -25,6 +25,7 @@ const NAV: { to: string; label: string; children?: { to: string; label: string }
   },
   { to: "/guide/acheter-terrain-a-batir", label: "Guide d'achat" },
   { to: "/a-propos", label: "À propos" },
+  { to: "/contact", label: "Contact" },
 ];
 
 export const SiteHeader = () => {
@@ -151,7 +152,7 @@ export const SiteHeader = () => {
             asChild
             className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full shadow-cta"
           >
-            <Link to="/programme#contact">Brochure & visite</Link>
+            <Link to="/contact">Brochure & visite</Link>
           </Button>
         </div>
 
@@ -214,7 +215,7 @@ export const SiteHeader = () => {
               asChild
               className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full mt-2"
             >
-              <Link to="/programme#contact">Brochure & visite</Link>
+              <Link to="/contact">Brochure & visite</Link>
             </Button>
           </div>
         </div>

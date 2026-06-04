@@ -9,6 +9,7 @@ const NAV = [
   { href: "#lots", label: "Lots disponibles" },
   { href: "#localisation", label: "Localisation" },
   { href: "#faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export const Header = () => {
