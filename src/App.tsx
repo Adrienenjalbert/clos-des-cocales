@@ -13,6 +13,7 @@ import APropos from "./pages/APropos.tsx";
 import Auth from "./pages/Auth.tsx";
 import AdminLots from "./pages/AdminLots.tsx";
 import Contact from "./pages/Contact.tsx";
+import Merci from "./pages/Merci.tsx";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin/lots" element={<AdminLots />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/merci" element={<Merci />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
