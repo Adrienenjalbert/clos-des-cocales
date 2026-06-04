@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Phone, MapPin, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/config/contact";
+import { track } from "@/lib/analytics";
 
 const NAV = [
   { href: "#programme", label: "Le programme" },
@@ -61,6 +62,7 @@ export const Header = () => {
         <div className="hidden md:flex items-center gap-3">
           <a
             href={`tel:${CONTACT.phoneTel}`}
+            onClick={() => track("click_phone", { location: "header_desktop" })}
             className="text-sm font-medium text-foreground hover:text-primary flex items-center gap-2 transition-colors"
           >
             <Phone className="w-4 h-4" />
@@ -70,7 +72,9 @@ export const Header = () => {
             asChild
             className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full shadow-cta"
           >
-            <a href="#contact">Réserver une visite</a>
+            <a href="#contact" onClick={() => track("click_brochure", { location: "header_desktop" })}>
+              Réserver une visite
+            </a>
           </Button>
         </div>
 
@@ -98,6 +102,7 @@ export const Header = () => {
             ))}
             <a
               href={`tel:${CONTACT.phoneTel}`}
+              onClick={() => track("click_phone", { location: "header_mobile" })}
               className="text-base font-medium text-primary flex items-center gap-2 py-2"
             >
               <Phone className="w-4 h-4" />
@@ -107,7 +112,7 @@ export const Header = () => {
               asChild
               className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full"
             >
-              <a href="#contact" onClick={() => setOpen(false)}>
+              <a href="#contact" onClick={() => { setOpen(false); track("click_brochure", { location: "header_mobile" }); }}>
                 Réserver une visite
               </a>
             </Button>

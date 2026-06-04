@@ -56,7 +56,10 @@ export const Hero = () => {
               size="lg"
               className="bg-background/10 backdrop-blur-md border-background/40 text-background hover:bg-background hover:text-foreground rounded-full text-base h-14 px-7"
             >
-              <a href={`tel:${CONTACT.phoneTel}`}>
+              <a
+                href={`tel:${CONTACT.phoneTel}`}
+                onClick={() => track("click_phone", { location: "hero" })}
+              >
                 <Phone className="mr-2 w-5 h-5" />
                 {CONTACT.phone}
               </a>

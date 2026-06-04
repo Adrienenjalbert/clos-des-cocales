@@ -124,6 +124,7 @@ export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => 
             <div className="space-y-3 pt-2">
               <a
                 href={`tel:${CONTACT.phoneTel}`}
+                onClick={() => track("click_phone", { location: "contact_section" })}
                 className="flex items-center gap-4 p-5 rounded-2xl bg-background border border-border hover:border-primary/40 hover:shadow-soft transition-all group"
               >
                 <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -143,6 +144,7 @@ export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => 
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => track("click_whatsapp", { location: "contact_section" })}
                 className="flex items-center gap-4 p-5 rounded-2xl bg-background border border-border hover:border-primary/40 hover:shadow-soft transition-all group"
               >
                 <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -158,7 +160,11 @@ export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => 
                 </div>
               </a>
 
-              <div className="flex items-center gap-4 p-5 rounded-2xl bg-background border border-border">
+              <a
+                href={`mailto:${CONTACT.email}`}
+                onClick={() => track("click_email", { location: "contact_section" })}
+                className="flex items-center gap-4 p-5 rounded-2xl bg-background border border-border hover:border-primary/40 hover:shadow-soft transition-all group"
+              >
                 <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
                   <Mail className="w-5 h-5" />
                 </div>
