@@ -11,7 +11,10 @@ import BudgetTotal from "./pages/BudgetTotal.tsx";
 import Guide from "./pages/Guide.tsx";
 import APropos from "./pages/APropos.tsx";
 import Auth from "./pages/Auth.tsx";
+import AdminLayout from "./components/admin/AdminLayout.tsx";
+import AdminDashboard from "./pages/admin/Dashboard.tsx";
 import AdminLots from "./pages/AdminLots.tsx";
+import AdminLeads from "./pages/admin/Leads.tsx";
 import Contact from "./pages/Contact.tsx";
 import Merci from "./pages/Merci.tsx";
 
