@@ -46,8 +46,8 @@ export const Localisation = () => {
           <div className="lg:col-span-3 space-y-4">
             <div className="relative rounded-2xl overflow-hidden shadow-card aspect-[4/3] bg-secondary">
               <iframe
-                title="Carte d'Espondeilhan"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=3.27%2C43.40%2C3.34%2C43.46&amp;layer=mapnik&amp;marker=43.4308%2C3.3050"
+                title="Le Clos des Cocales — Avenue de la Mer, Espondeilhan"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=3.2545%2C43.4344%2C3.2745%2C43.4444&amp;layer=mapnik&amp;marker=43.4394%2C3.2645"
                 className="w-full h-full border-0"
                 loading="lazy"
               />
