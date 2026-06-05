@@ -203,7 +203,7 @@ const Merci = () => {
               <div className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
                 <Link
                   to="/a-propos"
-                  onClick={() => track("thank_you_resource_click", { to: "/a-propos", title: "Le programme" })}
+                  onClick={() => track("thank_you_resource_click", { source: "thank_you", to: "/a-propos", title: "Le programme", item: "programme" })}
                   className="group bg-background border border-border rounded-2xl p-6 hover:border-primary/40 hover:shadow-soft transition-all flex flex-col"
                 >
                   <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -222,7 +222,7 @@ const Merci = () => {
                 </Link>
                 <Link
                   to="/programme#lots"
-                  onClick={() => track("thank_you_resource_click", { to: "/programme#lots", title: "Voir les lots disponibles" })}
+                  onClick={() => track("thank_you_resource_click", { source: "thank_you", to: "/programme#lots", title: "Voir les lots disponibles", item: "lots" })}
                   className="group bg-background border border-border rounded-2xl p-6 hover:border-primary/40 hover:shadow-soft transition-all flex flex-col"
                 >
                   <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
