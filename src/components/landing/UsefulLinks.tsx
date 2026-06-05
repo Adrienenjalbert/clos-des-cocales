@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Calculator, Wallet, BookOpen, ArrowRight } from "lucide-react";
+import { Calculator, Wallet, BookOpen, ArrowRight, FileText } from "lucide-react";
 import { track } from "@/lib/analytics";
 
 const LINKS = [
@@ -20,6 +20,12 @@ const LINKS = [
     icon: BookOpen,
     title: "Guide pratique",
     desc: "Les 6 étapes pour acheter sans pièges.",
+  },
+  {
+    to: "/brochure",
+    icon: FileText,
+    title: "Brochure complète",
+    desc: "Téléchargez la brochure du programme.",
   },
 ] as const;
 
@@ -62,7 +68,7 @@ export const UsefulLinks = ({ source = "post_lead", variant = "card", className 
       <p className="text-xs uppercase tracking-widest text-accent font-semibold mb-3 text-center">
         Pour préparer votre projet
       </p>
-      <div className="grid sm:grid-cols-3 gap-3">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {LINKS.map((l) => (
           <Link
             key={l.to}
