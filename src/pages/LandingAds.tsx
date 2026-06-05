@@ -1,17 +1,18 @@
 import { useParams, Navigate, Link } from "react-router-dom";
-import { Phone, MessageCircle, Check, MapPin, TrendingDown, ShieldCheck, Clock } from "lucide-react";
+import { Phone, MessageCircle, Check, MapPin, ShieldCheck, Clock } from "lucide-react";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ContactSection } from "@/components/landing/ContactSection";
 import { Button } from "@/components/ui/button";
 import { getCommune, COMMUNES, type Commune } from "@/data/communes";
-import { LOTS, LOTS_DISPONIBLES } from "@/data/lots";
+import { LOTS_DISPONIBLES } from "@/data/lots";
 import { CONTACT, whatsappLink } from "@/config/contact";
 import { track } from "@/lib/analytics";
 import logoCC from "@/assets/logo-cc.png";
 import heroImg from "@/assets/hero-cocales.jpg";
 
-const fmt = (n: number) => new Intl.NumberFormat("fr-FR").format(n) + " €";
+const PRIX_DEPART = "92 500 €";
+
 
 // Generic LP (no commune) used for the "Hérault / général" ad group
 const GENERIC: Commune = {
@@ -54,21 +55,25 @@ export const LandingAds = () => {
   const commune = !slug || slug === "herault" ? GENERIC : getCommune(slug);
   if (!commune) return <Navigate to="/" replace />;
 
-  const lotsDispo = LOTS.filter((l) => l.statut === "Disponible" && l.prix);
-  const lotMin = Math.min(...lotsDispo.map((l) => l.prix!));
-  const concMin = Math.min(...commune.prixExempleConcurrence.map((p) => p.prix));
-  const economie = Math.round(((concMin - lotMin) / concMin) * 100);
-
   const isGeneric = commune.slug === "herault";
-  const h1 = isGeneric
-    ? `Terrain à bâtir dans l'Hérault dès ${fmt(lotMin)}`
-    : `Terrain à bâtir près de ${commune.nom} dès ${fmt(lotMin)}`;
-  const title = isGeneric
-    ? `Terrain à bâtir Hérault (34) — 29 lots viabilisés dès ${fmt(lotMin)}`
-    : `Terrain à bâtir ${commune.nom} — alternative à ${commune.distanceMin} min dès ${fmt(lotMin)}`;
-  const description = isGeneric
-    ? `29 terrains à bâtir viabilisés dans l'Hérault, dès ${fmt(lotMin)}. Prix transparents, plan de masse, à 15 min de Béziers. Demandez la brochure.`
-    : `Terrain à bâtir près de ${commune.nom} : 29 lots viabilisés à ${commune.distanceMin} min, dès ${fmt(lotMin)}. Jusqu'à ${economie} % moins cher. Brochure & visite.`;
+  const isMontpellier = commune.slug === "montpellier";
+
+  const h1 = isMontpellier
+    ? `Terrain à bâtir à 40 min de Montpellier dès ${PRIX_DEPART}`
+    : isGeneric
+    ? `Terrain à bâtir dans l'Hérault dès ${PRIX_DEPART}`
+    : `Terrain à bâtir près de ${commune.nom} dès ${PRIX_DEPART}`;
+  const title = isMontpellier
+    ? `Terrain Montpellier ouest — 29 lots viabilisés dès ${PRIX_DEPART}`
+    : isGeneric
+    ? `Terrain à bâtir Hérault (34) — 29 lots viabilisés dès ${PRIX_DEPART}`
+    : `Terrain à bâtir ${commune.nom} — alternative à ${commune.distanceMin} min dès ${PRIX_DEPART}`;
+  const description = isMontpellier
+    ? `29 terrains viabilisés à 40 min de Montpellier, dès ${PRIX_DEPART}. Plan de masse, prix par lot, livraison immédiate. Recevez la brochure.`
+    : isGeneric
+    ? `29 terrains à bâtir viabilisés dans l'Hérault, dès ${PRIX_DEPART}. Plan de masse, prix transparents, livraison immédiate. Brochure gratuite.`
+    : `Terrain à bâtir près de ${commune.nom} : 29 lots viabilisés à ${commune.distanceMin} min, dès ${PRIX_DEPART}. Brochure & visite.`;
+
 
   return (
     <div className="min-h-screen bg-background">
