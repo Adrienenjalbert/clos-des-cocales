@@ -2,6 +2,7 @@ import { sendLeadEmails } from "@/lib/sendLeadEmails";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { Loader2, CheckCircle2, Gift } from "lucide-react";
+import { UsefulLinks } from "@/components/landing/UsefulLinks";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -133,6 +134,7 @@ export const ExitIntentModal = () => {
             <DialogDescription className="text-base">
               Vous recevrez la grille des prix et l'alerte dès qu'un nouveau lot se libère.
             </DialogDescription>
+            <UsefulLinks source="exit_intent" variant="compact" className="mt-6" />
             <Button onClick={() => setOpen(false)} className="mt-6 rounded-full">Fermer</Button>
           </div>
         ) : (

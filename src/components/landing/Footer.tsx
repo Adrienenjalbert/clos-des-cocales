@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import { CONTACT } from "@/config/contact";
 
 export const Footer = () => {
   return (
     <footer className="bg-foreground text-background/80 py-12 pb-28 lg:pb-12">
       <div className="container mx-auto">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="font-display text-xl font-semibold text-background mb-3">
               {CONTACT.programName}
@@ -50,6 +51,17 @@ export const Footer = () => {
                   Fiche officielle Sud Immo Catalogue
                 </a>
               </li>
+            </ul>
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-widest text-background/60 mb-3">
+              Outils &amp; guide
+            </div>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/outils/simulateur-pret" className="hover:text-background">Simulateur de prêt</Link></li>
+              <li><Link to="/outils/budget-total" className="hover:text-background">Budget total terrain + maison</Link></li>
+              <li><Link to="/guide/acheter-terrain-a-batir" className="hover:text-background">Guide d'achat</Link></li>
+              <li><Link to="/brochure" className="hover:text-background">Brochure &amp; plan de masse</Link></li>
             </ul>
           </div>
         </div>

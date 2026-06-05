@@ -3,6 +3,7 @@ import { useState, forwardRef, useImperativeHandle } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Phone, MessageCircle, Mail, Send, Loader2, CheckCircle2 } from "lucide-react";
+import { UsefulLinks } from "@/components/landing/UsefulLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -187,9 +188,10 @@ export const ContactSection = forwardRef<ContactSectionHandle>((_props, ref) => 
                   <h3 className="font-display text-2xl font-semibold text-foreground mb-2">
                     Demande bien reçue !
                   </h3>
-                  <p className="text-muted-foreground mb-6">
+                  <p className="text-muted-foreground mb-8">
                     Nous vous recontactons sous 24 h ouvrées pour échanger sur votre projet.
                   </p>
+                  <UsefulLinks source="contact_section" className="mb-8" />
                   <Button
                     variant="outline"
                     onClick={() => setSuccess(false)}

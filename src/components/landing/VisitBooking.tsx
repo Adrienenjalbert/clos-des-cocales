@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { z } from "zod";
 import { Loader2, CheckCircle2, Calendar, Clock, MapPin, Video, Phone, MessageCircle, CalendarPlus } from "lucide-react";
+import { UsefulLinks } from "@/components/landing/UsefulLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -247,6 +248,10 @@ export const VisitBooking = () => {
                 <CalendarPlus className="w-4 h-4 mr-2" />
                 Ajouter à mon calendrier (.ics)
               </Button>
+
+              <div className="pt-4 border-t border-border">
+                <UsefulLinks source="visit_booking" variant="compact" />
+              </div>
             </div>
           </div>
         </div>

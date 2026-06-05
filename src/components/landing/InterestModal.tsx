@@ -2,6 +2,7 @@ import { sendLeadEmails } from "@/lib/sendLeadEmails";
 import { useState } from "react";
 import { z } from "zod";
 import { Loader2, CheckCircle2 } from "lucide-react";
+import { UsefulLinks } from "@/components/landing/UsefulLinks";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -96,6 +97,7 @@ export const InterestModal = ({ open, onOpenChange, lotLabel }: Props) => {
             <DialogDescription className="text-base">
               Merci ! Notre conseiller vous contactera sous 24h ouvrées.
             </DialogDescription>
+            <UsefulLinks source="interest_modal" variant="compact" className="mt-6" />
             <Button onClick={() => handleClose(false)} className="mt-6 rounded-full">
               Fermer
             </Button>
