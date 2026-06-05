@@ -205,10 +205,10 @@ function followUpHtml(lead: LeadPayload) {
     <div style="background:#FAFAF7;border-radius:14px;padding:18px 20px;margin:0 0 20px;">
       <div style="font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:#B89968;font-weight:600;margin-bottom:10px;">Ressources utiles</div>
       <ul style="padding-left:18px;margin:0;">
-        <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/budget-total" style="color:#1A1D24;">Calculer votre budget total terrain + maison</a></li>
-        <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/simulateur-pret" style="color:#1A1D24;">Simulateur de prêt</a></li>
-        <li style="margin-bottom:6px;"><a href="${SITE_URL}/guide/acheter-terrain-a-batir" style="color:#1A1D24;">Guide pratique de l'achat de terrain</a></li>
-        <li style="margin-bottom:6px;"><a href="${SITE_URL}/brochure" style="color:#1A1D24;">Brochure complète du programme</a></li>
+        <li style="margin-bottom:6px;"><a href="${utmUrl("/outils/budget-total", "lead_followup", "budget")}" style="color:#1A1D24;">Calculer votre budget total terrain + maison</a></li>
+        <li style="margin-bottom:6px;"><a href="${utmUrl("/outils/simulateur-pret", "lead_followup", "simulateur")}" style="color:#1A1D24;">Simulateur de prêt</a></li>
+        <li style="margin-bottom:6px;"><a href="${utmUrl("/guide/acheter-terrain-a-batir", "lead_followup", "guide")}" style="color:#1A1D24;">Guide pratique de l'achat de terrain</a></li>
+        <li style="margin-bottom:6px;"><a href="${utmUrl("/brochure", "lead_followup", "brochure")}" style="color:#1A1D24;">Brochure complète du programme</a></li>
       </ul>
     </div>
 
