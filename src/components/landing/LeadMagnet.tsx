@@ -2,6 +2,7 @@ import { sendLeadEmails } from "@/lib/sendLeadEmails";
 import { useState } from "react";
 import { z } from "zod";
 import { Loader2, Download, CheckCircle2, FileText } from "lucide-react";
+import { UsefulLinks } from "@/components/landing/UsefulLinks";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -84,6 +85,7 @@ export const LeadMagnet = ({ trigger, source = "lead_magnet_brochure" }: Props) 
             <DialogDescription className="text-base">
               Vérifiez votre boîte mail dans quelques minutes. Pensez à regarder vos spams.
             </DialogDescription>
+            <UsefulLinks source="lead_magnet" variant="compact" className="mt-6" />
             <Button onClick={() => setOpen(false)} className="mt-6 rounded-full">Fermer</Button>
           </div>
         ) : (
