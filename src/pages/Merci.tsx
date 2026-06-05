@@ -8,13 +8,12 @@ import {
   Download,
   Calendar,
   MapPin,
-  Calculator,
-  BookOpen,
   ArrowRight,
 } from "lucide-react";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { UsefulLinks } from "@/components/landing/UsefulLinks";
 import { Button } from "@/components/ui/button";
 import { CONTACT, whatsappLink } from "@/config/contact";
 import { track } from "@/lib/analytics";
@@ -199,76 +198,47 @@ const Merci = () => {
         <section className="py-16 md:py-20">
           <div className="container mx-auto">
             <div className="max-w-5xl mx-auto">
-              <div className="text-center mb-10">
-                <span className="text-xs uppercase tracking-[0.2em] text-accent font-semibold">
-                  En attendant
-                </span>
-                <h2 className="font-display text-2xl md:text-3xl font-medium mt-3">
-                  Préparez votre projet
-                </h2>
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {[
-                  {
-                    to: "/outils/simulateur-pret",
-                    icon: Calculator,
-                    title: "Simulateur de prêt",
-                    desc: "Estimez vos mensualités en 30 secondes.",
-                  },
-                  {
-                    to: "/outils/budget-total",
-                    icon: Calculator,
-                    title: "Budget total terrain + maison",
-                    desc: "Frais notaire, raccordements, viabilisation.",
-                  },
-                  {
-                    to: "/guide/acheter-terrain-a-batir",
-                    icon: BookOpen,
-                    title: "Guide pratique",
-                    desc: "Tout savoir avant d'acheter un terrain à bâtir.",
-                  },
-                  {
-                    to: "/a-propos",
-                    icon: MapPin,
-                    title: "Le programme",
-                    desc: "Espondeilhan, à 15 min de Béziers.",
-                  },
-                  {
-                    to: "/programme#lots",
-                    icon: Download,
-                    title: "Voir les lots disponibles",
-                    desc: "Surfaces, prix et plan de masse.",
-                  },
-                  {
-                    to: "/contact",
-                    icon: Calendar,
-                    title: "Planifier une visite",
-                    desc: "Réservez un créneau sur place.",
-                  },
-                ].map(({ to, icon: Icon, title, desc }) => (
-                  <Link
-                    key={to + title}
-                    to={to}
-                    onClick={() =>
-                      track("thank_you_resource_click", { to, title })
-                    }
-                    className="group bg-background border border-border rounded-2xl p-6 hover:border-primary/40 hover:shadow-soft transition-all flex flex-col"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <h3 className="font-display font-semibold text-foreground mb-2">
-                      {title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                      {desc}
-                    </p>
-                    <span className="inline-flex items-center gap-1 text-sm text-accent font-medium mt-4">
-                      Découvrir
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </Link>
-                ))}
+              <UsefulLinks source="thank_you" variant="card" className="mb-12" />
+
+              <div className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
+                <Link
+                  to="/a-propos"
+                  onClick={() => track("thank_you_resource_click", { to: "/a-propos", title: "Le programme" })}
+                  className="group bg-background border border-border rounded-2xl p-6 hover:border-primary/40 hover:shadow-soft transition-all flex flex-col"
+                >
+                  <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-display font-semibold text-foreground mb-2">
+                    Le programme
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                    Espondeilhan, à 15 min de Béziers.
+                  </p>
+                  <span className="inline-flex items-center gap-1 text-sm text-accent font-medium mt-4">
+                    Découvrir
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+                <Link
+                  to="/programme#lots"
+                  onClick={() => track("thank_you_resource_click", { to: "/programme#lots", title: "Voir les lots disponibles" })}
+                  className="group bg-background border border-border rounded-2xl p-6 hover:border-primary/40 hover:shadow-soft transition-all flex flex-col"
+                >
+                  <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <Download className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-display font-semibold text-foreground mb-2">
+                    Voir les lots disponibles
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                    Surfaces, prix et plan de masse.
+                  </p>
+                  <span className="inline-flex items-center gap-1 text-sm text-accent font-medium mt-4">
+                    Découvrir
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
               </div>
             </div>
           </div>
