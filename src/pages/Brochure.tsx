@@ -328,10 +328,9 @@ const Brochure = () => {
                 </Button>
               </div>
             </div>
-
-            </div>
           </div>
         </section>
+
 
         {/* LOTS TABLE */}
         <section className="container mx-auto py-16 md:py-24">
