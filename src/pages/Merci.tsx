@@ -8,13 +8,12 @@ import {
   Download,
   Calendar,
   MapPin,
-  Calculator,
-  BookOpen,
   ArrowRight,
 } from "lucide-react";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { UsefulLinks } from "@/components/landing/UsefulLinks";
 import { Button } from "@/components/ui/button";
 import { CONTACT, whatsappLink } from "@/config/contact";
 import { track } from "@/lib/analytics";
