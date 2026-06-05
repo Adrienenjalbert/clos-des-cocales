@@ -202,6 +202,7 @@ function followUpHtml(lead: LeadPayload) {
         <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/budget-total" style="color:#1A1D24;">Calculer votre budget total terrain + maison</a></li>
         <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/simulateur-pret" style="color:#1A1D24;">Simulateur de prêt</a></li>
         <li style="margin-bottom:6px;"><a href="${SITE_URL}/guide/acheter-terrain-a-batir" style="color:#1A1D24;">Guide pratique de l'achat de terrain</a></li>
+        <li style="margin-bottom:6px;"><a href="${SITE_URL}/brochure" style="color:#1A1D24;">Brochure complète du programme</a></li>
       </ul>
     </div>
 
