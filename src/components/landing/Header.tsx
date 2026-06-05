@@ -40,10 +40,10 @@ export const Header = () => {
             <img src={logoCC} alt="Le Clos des Cocales" width={40} height={40} className={`w-8 h-8 object-contain ${scrolled ? "" : "brightness-0 invert"}`} />
           </div>
           <div className="leading-tight">
-            <div className="font-display text-base font-semibold text-foreground">
+            <div className={`font-display text-base font-semibold ${scrolled ? "text-foreground" : "text-background"}`}>
               Le Clos des Cocales
             </div>
-            <div className="text-[11px] text-muted-foreground flex items-center gap-1">
+            <div className={`text-[11px] flex items-center gap-1 ${scrolled ? "text-muted-foreground" : "text-background/75"}`}>
               <MapPin className="w-3 h-3" /> Espondeilhan · Hérault
             </div>
           </div>
@@ -54,7 +54,7 @@ export const Header = () => {
             <a
               key={n.href}
               href={n.href}
-              className="text-sm text-foreground/80 hover:text-primary transition-colors"
+              className={`text-sm transition-colors ${scrolled ? "text-foreground/80 hover:text-accent" : "text-background/85 hover:text-accent"}`}
             >
               {n.label}
             </a>
@@ -65,7 +65,7 @@ export const Header = () => {
           <a
             href={`tel:${CONTACT.phoneTel}`}
             onClick={() => track("click_phone", { location: "header_desktop" })}
-            className="text-sm font-medium text-foreground hover:text-primary flex items-center gap-2 transition-colors"
+            className={`text-sm font-medium flex items-center gap-2 transition-colors ${scrolled ? "text-foreground hover:text-accent" : "text-background hover:text-accent"}`}
           >
             <Phone className="w-4 h-4" />
             {CONTACT.phone}
@@ -81,7 +81,7 @@ export const Header = () => {
         </div>
 
         <button
-          className="lg:hidden p-2 text-foreground"
+          className={`lg:hidden p-2 ${scrolled ? "text-foreground" : "text-background"}`}
           onClick={() => setOpen((s) => !s)}
           aria-label="Menu"
         >
