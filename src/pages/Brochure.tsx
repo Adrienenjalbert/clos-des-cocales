@@ -401,7 +401,7 @@ const Brochure = () => {
             </Button>
           </div>
           <p className="mt-6 text-xs text-muted-foreground inline-flex items-center gap-1">
-            <MapPin className="w-3 h-3" /> 12 Avenue de la Liberté · 34290 Espondeilhan · Hérault
+            <MapPin className="w-3 h-3" /> Avenue de la Mer · 34290 Espondeilhan · Hérault
           </p>
         </section>
 
