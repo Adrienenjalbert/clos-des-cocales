@@ -17,6 +17,37 @@ export interface Commune {
 
 export const COMMUNES: Commune[] = [
   {
+    slug: "montpellier",
+    nom: "Montpellier",
+    codePostal: "34000",
+    distanceMin: 40,
+    distanceKm: 60,
+    population: 295000,
+    prixMoyenTerrainM2: 480,
+    prixExempleConcurrence: [
+      { surface: 400, prix: 220000 },
+      { surface: 500, prix: 260000 },
+    ],
+    atouts: [
+      "Capitale régionale, métropole étudiante et tech",
+      "Tramway 4 lignes, aéroport international, TGV Paris 3h15",
+      "Accès direct A9/A75 vers Espondeilhan en 40 min",
+    ],
+    intro:
+      "Acheter un terrain dans l'agglomération de Montpellier dépasse souvent 200 000 €. À 40 minutes par l'A75/A9, Le Clos des Cocales propose 29 terrains viabilisés dès 92 500 €. L'opportunité de devenir propriétaire en restant à portée de la métropole montpelliéraine — pour travailler, étudier, profiter de la vie urbaine sans en subir le coût foncier.",
+    faq: [
+      {
+        q: "Combien de temps de Montpellier au Clos des Cocales ?",
+        a: "Environ 40 minutes par l'A75 puis l'A9 (sortie Béziers Ouest). Trajet quotidien envisageable, particulièrement pour le télétravail partiel.",
+      },
+      {
+        q: "Pourquoi acheter à Espondeilhan plutôt qu'à Montpellier ?",
+        a: "Le foncier dans l'agglo montpelliéraine est devenu inaccessible pour beaucoup de familles (>200 000 € pour 400 m²). Espondeilhan offre un cadre village authentique, des terrains 2 à 3 fois moins chers, une fiscalité douce, et un accès rapide à la métropole.",
+      },
+    ],
+  },
+
+  {
     slug: "beziers",
     nom: "Béziers",
     codePostal: "34500",

@@ -18,6 +18,7 @@ import AdminLeads from "./pages/admin/Leads.tsx";
 import Contact from "./pages/Contact.tsx";
 import Merci from "./pages/Merci.tsx";
 import LandingAds from "./pages/LandingAds.tsx";
+import Brochure from "./pages/Brochure.tsx";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/merci" element={<Merci />} />
           <Route path="/lp/:slug" element={<LandingAds />} />
+          <Route path="/brochure" element={<Brochure />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

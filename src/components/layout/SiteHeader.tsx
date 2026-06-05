@@ -161,7 +161,7 @@ export const SiteHeader = () => {
             asChild
             className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full shadow-cta"
           >
-            <Link to="/contact" onClick={() => track("click_brochure", { location: "site_header_desktop" })}>
+            <Link to="/brochure" onClick={() => track("click_brochure", { location: "site_header_desktop" })}>
               Brochure & visite
             </Link>
           </Button>
@@ -227,7 +227,7 @@ export const SiteHeader = () => {
               asChild
               className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full mt-2"
             >
-              <Link to="/contact" onClick={() => track("click_brochure", { location: "site_header_mobile" })}>
+              <Link to="/brochure" onClick={() => track("click_brochure", { location: "site_header_mobile" })}>
                 Brochure & visite
               </Link>
             </Button>

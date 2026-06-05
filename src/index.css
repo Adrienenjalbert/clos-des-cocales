@@ -5,37 +5,37 @@
 @tailwind utilities;
 
 /* Le Clos des Cocales — Design System
-   "Editorial Méditerranéen" — olive, pierre, terracotta sobre.
+   "Premium Anthracite" — anthracite profond, blanc cassé, doré champagne.
    All colors in HSL.
 */
 
 @layer base {
   :root {
-    --background: 40 50% 96%;          /* pierre claire #FAF7F0 */
-    --foreground: 80 18% 14%;          /* deep olive ink */
+    --background: 40 18% 97%;          /* blanc cassé chaud #FAFAF7 */
+    --foreground: 220 14% 12%;         /* anthracite profond #1A1D24 */
 
     --card: 0 0% 100%;
-    --card-foreground: 80 18% 14%;
+    --card-foreground: 220 14% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 80 18% 14%;
+    --popover-foreground: 220 14% 12%;
 
-    --primary: 80 26% 39%;             /* olive #6B7F4A */
-    --primary-foreground: 40 50% 96%;
-    --primary-glow: 80 24% 50%;
+    --primary: 220 14% 12%;            /* anthracite */
+    --primary-foreground: 40 18% 97%;
+    --primary-glow: 220 12% 22%;
 
-    --secondary: 38 30% 90%;           /* pierre warm */
-    --secondary-foreground: 80 22% 18%;
+    --secondary: 40 14% 92%;           /* pierre claire */
+    --secondary-foreground: 220 14% 16%;
 
-    --muted: 38 28% 92%;
-    --muted-foreground: 80 8% 38%;
+    --muted: 40 12% 94%;
+    --muted-foreground: 220 8% 38%;
 
-    --accent: 21 56% 54%;              /* terracotta #C97B4A */
-    --accent-foreground: 40 50% 98%;
-    --accent-soft: 21 60% 92%;
+    --accent: 36 33% 56%;              /* champagne gold #B89968 */
+    --accent-foreground: 220 14% 10%;
+    --accent-soft: 36 40% 92%;
 
-    --sage: 80 22% 32%;                /* deeper olive accent */
-    --sage-foreground: 40 50% 96%;
+    --sage: 220 12% 28%;
+    --sage-foreground: 40 18% 97%;
 
     --destructive: 0 72% 45%;
     --destructive-foreground: 0 0% 100%;
@@ -43,30 +43,31 @@
     --success: 145 45% 36%;
     --warning: 36 80% 48%;
 
-    --border: 38 22% 84%;
-    --input: 38 22% 86%;
-    --ring: 80 26% 39%;
+    --border: 40 10% 88%;
+    --input: 40 10% 90%;
+    --ring: 36 33% 56%;
 
     --radius: 0.5rem;
 
     /* Custom design tokens */
-    --gradient-hero: linear-gradient(180deg, hsl(80 22% 10% / 0) 0%, hsl(80 22% 10% / 0.45) 55%, hsl(80 22% 10% / 0.85) 100%);
-    --gradient-warm: linear-gradient(135deg, hsl(40 50% 96%) 0%, hsl(38 32% 88%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(21 56% 54%) 0%, hsl(28 60% 62%) 100%);
-    --shadow-soft: 0 6px 24px -8px hsl(80 18% 14% / 0.10);
-    --shadow-card: 0 14px 40px -16px hsl(80 18% 14% / 0.15);
-    --shadow-elevated: 0 24px 60px -20px hsl(80 18% 14% / 0.22);
-    --shadow-cta: 0 12px 32px -10px hsl(21 56% 54% / 0.45);
+    --gradient-hero: linear-gradient(180deg, hsl(220 14% 8% / 0) 0%, hsl(220 14% 8% / 0.55) 55%, hsl(220 14% 6% / 0.92) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(40 18% 97%) 0%, hsl(40 14% 90%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(36 33% 56%) 0%, hsl(36 40% 66%) 100%);
+    --gradient-dark: linear-gradient(135deg, hsl(220 14% 10%) 0%, hsl(220 14% 16%) 100%);
+    --shadow-soft: 0 6px 24px -8px hsl(220 14% 12% / 0.08);
+    --shadow-card: 0 14px 40px -16px hsl(220 14% 12% / 0.12);
+    --shadow-elevated: 0 24px 60px -20px hsl(220 14% 12% / 0.18);
+    --shadow-cta: 0 12px 32px -10px hsl(36 33% 40% / 0.35);
     --transition-smooth: cubic-bezier(0.32, 0, 0.16, 1);
 
-    --sidebar-background: 40 40% 97%;
-    --sidebar-foreground: 80 18% 22%;
-    --sidebar-primary: 80 26% 39%;
-    --sidebar-primary-foreground: 40 50% 96%;
-    --sidebar-accent: 38 28% 92%;
-    --sidebar-accent-foreground: 80 22% 18%;
-    --sidebar-border: 38 22% 86%;
-    --sidebar-ring: 80 26% 39%;
+    --sidebar-background: 40 14% 96%;
+    --sidebar-foreground: 220 14% 20%;
+    --sidebar-primary: 220 14% 12%;
+    --sidebar-primary-foreground: 40 18% 97%;
+    --sidebar-accent: 40 12% 92%;
+    --sidebar-accent-foreground: 220 14% 16%;
+    --sidebar-border: 40 10% 88%;
+    --sidebar-ring: 36 33% 56%;
   }
 }
 
@@ -103,6 +104,7 @@
   .bg-hero-gradient { background-image: var(--gradient-hero); }
   .bg-warm-gradient { background-image: var(--gradient-warm); }
   .bg-gold-gradient { background-image: var(--gradient-gold); }
+  .bg-dark-gradient { background-image: var(--gradient-dark); }
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-card { box-shadow: var(--shadow-card); }
   .shadow-elevated { box-shadow: var(--shadow-elevated); }
@@ -115,7 +117,7 @@
   .text-sage { color: hsl(var(--sage)); }
   .bg-grain {
     background-image:
-      radial-gradient(hsl(80 18% 14% / 0.04) 1px, transparent 1px);
+      radial-gradient(hsl(220 14% 12% / 0.04) 1px, transparent 1px);
     background-size: 3px 3px;
   }
 

@@ -1,38 +1,36 @@
 import { useParams, Navigate, Link } from "react-router-dom";
-import { Phone, MessageCircle, Check, MapPin, TrendingDown, ShieldCheck, Clock } from "lucide-react";
+import { Phone, MessageCircle, Check, MapPin, ShieldCheck, Clock } from "lucide-react";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ContactSection } from "@/components/landing/ContactSection";
 import { Button } from "@/components/ui/button";
 import { getCommune, COMMUNES, type Commune } from "@/data/communes";
-import { LOTS, LOTS_DISPONIBLES } from "@/data/lots";
+import { LOTS_DISPONIBLES } from "@/data/lots";
 import { CONTACT, whatsappLink } from "@/config/contact";
 import { track } from "@/lib/analytics";
 import logoCC from "@/assets/logo-cc.png";
 import heroImg from "@/assets/hero-cocales.jpg";
 
-const fmt = (n: number) => new Intl.NumberFormat("fr-FR").format(n) + " €";
+const PRIX_DEPART = "92 500 €";
+
 
 // Generic LP (no commune) used for the "Hérault / général" ad group
 const GENERIC: Commune = {
   slug: "herault",
   nom: "l'Hérault",
   codePostal: "34",
-  distanceMin: 15,
-  distanceKm: 17,
+  distanceMin: 40,
+  distanceKm: 50,
   population: 0,
   prixMoyenTerrainM2: 280,
-  prixExempleConcurrence: [
-    { surface: 450, prix: 135000 },
-    { surface: 500, prix: 140000 },
-  ],
+  prixExempleConcurrence: [],
   atouts: [
     "29 lots viabilisés, prêts à construire",
-    "Entre Béziers (15 min) et Pézenas (20 min)",
-    "Cadre village authentique du Languedoc",
+    "À 40 min de Montpellier, 15 min de Béziers, 25 min des plages",
+    "Cadre village authentique du Languedoc, écoles & commerces sur place",
   ],
   intro:
-    "Vous cherchez un terrain à bâtir dans l'Hérault ? Le Clos des Cocales à Espondeilhan propose 29 lots viabilisés, dès 99 900 €, à 15 minutes de Béziers. Prix transparents, plan de masse disponible, livraison immédiate.",
+    "Vous cherchez un terrain à bâtir dans l'Hérault ? Le Clos des Cocales à Espondeilhan propose 29 lots viabilisés, dès 92 500 €, à 40 min de Montpellier et 15 min de Béziers. Plan de masse disponible, livraison immédiate.",
   faq: [
     {
       q: "Les terrains sont-ils viabilisés ?",
@@ -49,26 +47,31 @@ const GENERIC: Commune = {
   ],
 };
 
+
 export const LandingAds = () => {
   const { slug } = useParams<{ slug: string }>();
   const commune = !slug || slug === "herault" ? GENERIC : getCommune(slug);
   if (!commune) return <Navigate to="/" replace />;
 
-  const lotsDispo = LOTS.filter((l) => l.statut === "Disponible" && l.prix);
-  const lotMin = Math.min(...lotsDispo.map((l) => l.prix!));
-  const concMin = Math.min(...commune.prixExempleConcurrence.map((p) => p.prix));
-  const economie = Math.round(((concMin - lotMin) / concMin) * 100);
-
   const isGeneric = commune.slug === "herault";
-  const h1 = isGeneric
-    ? `Terrain à bâtir dans l'Hérault dès ${fmt(lotMin)}`
-    : `Terrain à bâtir près de ${commune.nom} dès ${fmt(lotMin)}`;
-  const title = isGeneric
-    ? `Terrain à bâtir Hérault (34) — 29 lots viabilisés dès ${fmt(lotMin)}`
-    : `Terrain à bâtir ${commune.nom} — alternative à ${commune.distanceMin} min dès ${fmt(lotMin)}`;
-  const description = isGeneric
-    ? `29 terrains à bâtir viabilisés dans l'Hérault, dès ${fmt(lotMin)}. Prix transparents, plan de masse, à 15 min de Béziers. Demandez la brochure.`
-    : `Terrain à bâtir près de ${commune.nom} : 29 lots viabilisés à ${commune.distanceMin} min, dès ${fmt(lotMin)}. Jusqu'à ${economie} % moins cher. Brochure & visite.`;
+  const isMontpellier = commune.slug === "montpellier";
+
+  const h1 = isMontpellier
+    ? `Terrain à bâtir à 40 min de Montpellier dès ${PRIX_DEPART}`
+    : isGeneric
+    ? `Terrain à bâtir dans l'Hérault dès ${PRIX_DEPART}`
+    : `Terrain à bâtir près de ${commune.nom} dès ${PRIX_DEPART}`;
+  const title = isMontpellier
+    ? `Terrain Montpellier ouest — 29 lots viabilisés dès ${PRIX_DEPART}`
+    : isGeneric
+    ? `Terrain à bâtir Hérault (34) — 29 lots viabilisés dès ${PRIX_DEPART}`
+    : `Terrain à bâtir ${commune.nom} — alternative à ${commune.distanceMin} min dès ${PRIX_DEPART}`;
+  const description = isMontpellier
+    ? `29 terrains viabilisés à 40 min de Montpellier, dès ${PRIX_DEPART}. Plan de masse, prix par lot, livraison immédiate. Recevez la brochure.`
+    : isGeneric
+    ? `29 terrains à bâtir viabilisés dans l'Hérault, dès ${PRIX_DEPART}. Plan de masse, prix transparents, livraison immédiate. Brochure gratuite.`
+    : `Terrain à bâtir près de ${commune.nom} : 29 lots viabilisés à ${commune.distanceMin} min, dès ${PRIX_DEPART}. Brochure & visite.`;
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -188,7 +191,7 @@ export const LandingAds = () => {
                     <div className="text-[10px] uppercase tracking-wider text-muted-foreground">lots dispo</div>
                   </div>
                   <div>
-                    <div className="text-xl font-display font-semibold text-foreground">{fmt(lotMin).replace(" €", "")}€</div>
+                    <div className="text-xl font-display font-semibold text-foreground">92,5k€</div>
                     <div className="text-[10px] uppercase tracking-wider text-muted-foreground">dès</div>
                   </div>
                   <div>
@@ -206,7 +209,7 @@ export const LandingAds = () => {
           <div className="container mx-auto py-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             {[
               { i: ShieldCheck, t: "Lots viabilisés" },
-              { i: TrendingDown, t: "Prix transparents" },
+              { i: Check, t: "Prix transparents" },
               { i: Clock, t: "Livraison immédiate" },
               { i: MapPin, t: "Espondeilhan (34)" },
             ].map(({ i: Icon, t }) => (
@@ -218,54 +221,37 @@ export const LandingAds = () => {
           </div>
         </section>
 
-        {/* Comparatif prix */}
-        {!isGeneric && (
-          <section className="container mx-auto py-16 md:py-20">
-            <div className="max-w-3xl">
-              <span className="text-xs uppercase tracking-widest text-accent font-semibold">
-                Comparatif marché
-              </span>
-              <h2 className="font-display text-3xl md:text-4xl font-medium mt-3 mb-4">
-                Jusqu'à <span className="text-accent">{economie}%</span> moins cher qu'à {commune.nom}
-              </h2>
-              <p className="text-muted-foreground">
-                Comparaison entre les terrains à bâtir disponibles près de {commune.nom} et Le Clos des Cocales à {commune.distanceMin} min.
-              </p>
+        {/* Plan de masse */}
+        <section className="container mx-auto py-16 md:py-20">
+          <div className="max-w-3xl mb-8">
+            <span className="text-xs uppercase tracking-widest text-accent font-semibold">Plan officiel</span>
+            <h2 className="font-display text-3xl md:text-4xl font-medium mt-3 mb-3">
+              Découvrez l'implantation des 29 lots
+            </h2>
+            <p className="text-muted-foreground">
+              Plan certifié par notre géomètre-expert. Surfaces, voiries, orientation — tout est documenté.
+            </p>
+          </div>
+          <a
+            href="#form"
+            className="block relative rounded-2xl overflow-hidden shadow-card border border-border bg-background hover:shadow-elevated transition-shadow group"
+            onClick={() => track("plan_zoom_open", { location: "lp", commune: commune.slug })}
+          >
+            <img
+              src={"/__l5e/assets-v1/5e57fae3-fc7b-4f9b-aa34-4922ff1462f5/plan-de-masse.png"}
+              alt="Plan de masse Le Clos des Cocales"
+              width={1600}
+              height={2200}
+              loading="lazy"
+              className="w-full h-auto"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-foreground/85 to-transparent p-6 text-background">
+              <p className="font-display text-lg md:text-xl font-semibold">29 lots viabilisés — de 335 à 832 m²</p>
+              <p className="text-sm text-background/85">Cliquez pour recevoir la brochure complète (plan PDF + prix)</p>
             </div>
+          </a>
+        </section>
 
-            <div className="grid md:grid-cols-2 gap-6 mt-10">
-              <div className="rounded-3xl border border-border bg-muted/30 p-7">
-                <h3 className="font-display text-xl font-semibold mb-1">Marché à {commune.nom}</h3>
-                <p className="text-sm text-muted-foreground mb-5">Prix moyen ≈ {commune.prixMoyenTerrainM2} €/m²</p>
-                <ul className="space-y-2">
-                  {commune.prixExempleConcurrence.map((p, i) => (
-                    <li key={i} className="flex justify-between text-sm border-b border-border/60 pb-2">
-                      <span>{p.surface} m²</span>
-                      <span className="font-semibold">{fmt(p.prix)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-3xl border-2 border-accent bg-background p-7 shadow-card">
-                <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-accent font-semibold mb-2">
-                  <TrendingDown className="w-3.5 h-3.5" /> Le Clos des Cocales — {commune.distanceMin} min
-                </div>
-                <h3 className="font-display text-xl font-semibold mb-5">{LOTS_DISPONIBLES} lots viabilisés</h3>
-                <ul className="space-y-2">
-                  {lotsDispo.slice(0, 4).map((l) => (
-                    <li key={l.numero} className="flex justify-between text-sm border-b border-border/60 pb-2">
-                      <span>Lot {l.numero} — {l.surface} m²</span>
-                      <span className="font-semibold text-primary">{fmt(l.prix!)}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button asChild size="sm" variant="link" className="mt-3 p-0 h-auto text-accent">
-                  <a href="#form">Voir tous les lots & prix →</a>
-                </Button>
-              </div>
-            </div>
-          </section>
-        )}
 
         {/* Atouts */}
         <section className="bg-muted/30">

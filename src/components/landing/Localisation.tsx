@@ -1,13 +1,13 @@
-import { MapPin, Car, Train, ShoppingBag, GraduationCap } from "lucide-react";
+import { MapPin, Car, Train, ShoppingBag, GraduationCap, Plane } from "lucide-react";
 import dreamHomeImg from "@/assets/dream-home.jpg";
 
 const ACCESS = [
+  { icon: Car, label: "Montpellier", value: "40 min" },
   { icon: Car, label: "Béziers centre", value: "15 min" },
-  { icon: Car, label: "Autoroute A9", value: "10 min" },
+  { icon: MapPin, label: "Plages Méditerranée", value: "25 min" },
+  { icon: Car, label: "Autoroute A9 / A75", value: "10 min" },
   { icon: Train, label: "Gare TGV Béziers", value: "20 min" },
-  { icon: ShoppingBag, label: "Commerces & marché", value: "Sur place" },
-  { icon: GraduationCap, label: "Écoles", value: "À proximité" },
-  { icon: MapPin, label: "Plage Méditerranée", value: "30 min" },
+  { icon: ShoppingBag, label: "Commerces & écoles", value: "Sur place" },
 ];
 
 export const Localisation = () => {
@@ -20,13 +20,13 @@ export const Localisation = () => {
               Localisation
             </span>
             <h2 className="font-display text-3xl md:text-5xl font-medium text-foreground leading-tight">
-              Tout est à portée,<br />
-              <span className="italic">rien ne vous gêne.</span>
+              Proche de tout,<br />
+              <span className="italic">loin du bruit.</span>
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Espondeilhan, c'est le meilleur des deux mondes : la quiétude d'un village
-              authentique et un accès rapide aux grands axes, à Béziers, à la gare TGV
-              et aux plages méditerranéennes.
+              Espondeilhan se situe au croisement de l'A9 et de l'A75 : Montpellier accessible
+              en 40 min, Béziers en 15 min, la mer en 25 min. Un emplacement stratégique pour
+              concilier travail à la ville et vie de village.
             </p>
 
             <div className="grid grid-cols-2 gap-3 pt-2">
@@ -35,7 +35,7 @@ export const Localisation = () => {
                   key={a.label}
                   className="p-4 rounded-xl bg-secondary/40 border border-border"
                 >
-                  <a.icon className="w-5 h-5 text-primary mb-2" />
+                  <a.icon className="w-5 h-5 text-accent mb-2" />
                   <div className="text-sm text-muted-foreground">{a.label}</div>
                   <div className="font-display font-semibold text-foreground">{a.value}</div>
                 </div>

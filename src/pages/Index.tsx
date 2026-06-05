@@ -3,6 +3,7 @@ import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
 import { Programme } from "@/components/landing/Programme";
 import { Atouts } from "@/components/landing/Atouts";
+import { PlanDeMasse } from "@/components/landing/PlanDeMasse";
 import { LotsTable } from "@/components/landing/LotsTable";
 import { Localisation } from "@/components/landing/Localisation";
 import { Etapes } from "@/components/landing/Etapes";
@@ -13,16 +14,13 @@ import { MobileCTA } from "@/components/landing/MobileCTA";
 import { StickyDesktopBar } from "@/components/landing/StickyDesktopBar";
 import { ExitIntentModal } from "@/components/landing/ExitIntentModal";
 import { VisitBooking } from "@/components/landing/VisitBooking";
-import { CommunesCompareBanner } from "@/components/landing/CommunesCompareBanner";
 import { NumbersBlock } from "@/components/premium/NumbersBlock";
-import { Testimonials } from "@/components/premium/Testimonials";
-import { CommunesGrid } from "@/components/premium/CommunesGrid";
 
 const Index = () => {
   const contactRef = useRef<ContactSectionHandle>(null);
 
   useEffect(() => {
-    document.title = "Le Clos des Cocales — Terrains à bâtir à Espondeilhan dès 99 900 €";
+    document.title = "Le Clos des Cocales — Terrain à bâtir à 40 min de Montpellier, dès 92 500 €";
 
     const setMeta = (name: string, content: string) => {
       let el = document.querySelector(`meta[name="${name}"]`);
@@ -36,7 +34,7 @@ const Index = () => {
 
     setMeta(
       "description",
-      "Terrains à bâtir viabilisés à Espondeilhan (Hérault), à 15 min de Béziers. De 250 à 832 m² dès 99 900 €. Frais de notaire réduits 3 %. Livraison immédiate."
+      "29 terrains à bâtir viabilisés à 40 min de Montpellier, 15 min de Béziers. Dès 92 500 €. Frais de notaire réduits, livraison immédiate. Plan de masse & brochure."
     );
     setMeta("robots", "index, follow");
     document.documentElement.lang = "fr";
@@ -55,14 +53,14 @@ const Index = () => {
       "@type": "Residence",
       name: "Le Clos des Cocales",
       description:
-        "Lotissement de terrains à bâtir viabilisés à Espondeilhan, Hérault.",
+        "Lotissement de 29 terrains à bâtir viabilisés à Espondeilhan, à 40 min de Montpellier et 15 min de Béziers.",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Espondeilhan",
         addressRegion: "Hérault",
         addressCountry: "FR",
       },
-      offers: { "@type": "Offer", priceCurrency: "EUR", price: "99900" },
+      offers: { "@type": "Offer", priceCurrency: "EUR", price: "92500" },
     });
   }, []);
 
@@ -74,11 +72,9 @@ const Index = () => {
         <NumbersBlock />
         <Programme />
         <Atouts />
+        <PlanDeMasse />
         <LotsTable onSelectLot={(label) => contactRef.current?.setLot(label)} />
         <Localisation />
-        <CommunesCompareBanner />
-        <CommunesGrid />
-        <Testimonials />
         <Etapes />
         <VisitBooking />
         <FAQ />

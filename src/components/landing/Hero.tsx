@@ -12,7 +12,7 @@ export const Hero = () => {
     <section id="top" className="relative min-h-screen flex items-end overflow-hidden">
       <img
         src={heroImg}
-        alt="Vue aérienne du lotissement Le Clos des Cocales à Espondeilhan, entre vignes et garrigue"
+        alt="Vue aérienne du lotissement Le Clos des Cocales à Espondeilhan, entre Montpellier et Béziers"
         width={1920}
         height={1280}
         fetchPriority="high"
@@ -24,20 +24,27 @@ export const Hero = () => {
         <div className="max-w-3xl animate-fade-up">
           <span className="inline-flex items-center gap-2 bg-background/10 backdrop-blur-md border border-background/25 text-background text-[11px] uppercase tracking-[0.2em] px-4 py-2 rounded-full mb-6 font-semibold">
             <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            Plus que {LOTS_DISPONIBLES} lots · Livraison immédiate
+            À 40 min de Montpellier · {LOTS_DISPONIBLES} lots disponibles
           </span>
 
           <h1 className="font-display text-[40px] md:text-7xl lg:text-[88px] font-medium leading-[0.98] text-background mb-6 text-balance">
-            Construisez votre maison
+            Votre terrain à bâtir
             <br />
-            <span className="editorial text-accent">là où il fait bon vivre.</span>
+            <span className="editorial text-accent">à 40 min de Montpellier.</span>
           </h1>
 
-          <p className="text-base md:text-xl text-background/85 max-w-2xl mb-8 font-light leading-relaxed">
-            29 terrains à bâtir viabilisés à Espondeilhan, au cœur du Languedoc — à 15 min
-            de Béziers. De 250 à 832 m², dès{" "}
-            <strong className="font-semibold text-background">99 900 €</strong> avec frais de
-            notaire réduits.
+          <p className="text-base md:text-xl text-background/85 max-w-2xl mb-4 font-light leading-relaxed">
+            29 terrains viabilisés au cœur du Languedoc, à 15 min de Béziers et 25 min des plages.
+            De 335 à 832 m², avec frais de notaire réduits.
+          </p>
+
+          <p className="mb-8">
+            <span className="font-display text-3xl md:text-4xl font-semibold text-background">
+              Dès 92&nbsp;500&nbsp;€
+            </span>
+            <span className="block text-[11px] text-background/55 mt-1">
+              Offre promotionnelle ponctuelle — voir conditions
+            </span>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10">
@@ -46,8 +53,8 @@ export const Hero = () => {
               size="lg"
               className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full text-base h-14 px-7 shadow-cta font-semibold"
             >
-              <Link to="/programme#lots">
-                Voir les {LOTS_DISPONIBLES} lots
+              <Link to="/brochure" onClick={() => track("click_brochure", { location: "hero" })}>
+                Recevoir la brochure
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
