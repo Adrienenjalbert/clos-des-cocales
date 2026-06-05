@@ -29,8 +29,8 @@ const BudgetTotal = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Estimateur budget total — terrain + construction maison | Le Clos des Cocales"
-        description="Estimez le budget total de votre projet : terrain à bâtir + construction maison neuve, frais de notaire réduits 3 %, raccordements, aléas."
+        title="Estimateur budget terrain + maison | Le Clos des Cocales"
+        description="Estimez le budget total : terrain à bâtir + construction maison neuve, frais de notaire réduits, raccordements, aléas."
         path="/outils/budget-total"
       />
       <SiteHeader />
