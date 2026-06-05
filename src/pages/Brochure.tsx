@@ -17,6 +17,7 @@ import logoCC from "@/assets/logo-cc.png";
 import heroImg from "@/assets/hero-cocales.jpg";
 import planImg from "@/assets/plan-de-masse.png.asset.json";
 import planPdf from "@/assets/plan-de-masse.pdf.asset.json";
+import brochurePdf from "@/assets/brochure.pdf.asset.json";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Nom trop court").max(120),
@@ -62,8 +63,8 @@ const Brochure = () => {
       if (error) throw error;
       track("brochure_request_success", {});
       toast.success("Merci ! Votre brochure arrive par email.");
-      // Open plan PDF immediately as instant gratification
-      window.open(planPdf.url, "_blank");
+      // Instant gratification: open brochure PDF immediately
+      window.open(brochurePdf.url, "_blank");
       setTimeout(() => navigate("/merci?source=brochure"), 600);
     } catch (err) {
       console.error(err);
