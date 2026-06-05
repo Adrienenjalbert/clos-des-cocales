@@ -5,7 +5,9 @@ export const CONTACT = {
   whatsapp: "33683421366",
   email: "s1tjm65@gmail.com",
   programName: "Le Clos des Cocales",
-  location: "Espondeilhan, Hérault (34)",
+  location: "Avenue de la Mer, 34290 Espondeilhan, Hérault",
+  address: "Avenue de la Mer, 34290 Espondeilhan",
+  coords: { lat: 43.4394, lng: 3.2645 },
   sourceUrl: "https://www.sudimmocatalogue.fr/programmes/le-clos-des-cocales/",
 };
 
