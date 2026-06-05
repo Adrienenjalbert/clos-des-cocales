@@ -43,6 +43,12 @@ function esc(s: string) {
   return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
 }
 
+// Add UTM params to internal links for GA4 attribution
+function utmUrl(path: string, campaign: string, content: string) {
+  const sep = path.includes("?") ? "&" : "?";
+  return `${SITE_URL}${path}${sep}utm_source=email&utm_medium=email&utm_campaign=${encodeURIComponent(campaign)}&utm_content=${encodeURIComponent(content)}`;
+}
+
 // ---------- Brand-styled wrapper (inline CSS, mobile-first, light bg) ----------
 function shell(title: string, preheader: string, body: string) {
   return `<!doctype html>
@@ -118,10 +124,10 @@ function confirmationHtml(lead: LeadPayload) {
 
     <p style="margin:0 0 8px;font-weight:600;">En attendant, préparez votre projet :</p>
     <ul style="padding-left:18px;margin:0 0 20px;">
-      <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/simulateur-pret" style="color:#1A1D24;">Simulateur de prêt immobilier</a></li>
-      <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/budget-total" style="color:#1A1D24;">Budget total terrain + maison</a></li>
-      <li style="margin-bottom:6px;"><a href="${SITE_URL}/guide/acheter-terrain-a-batir" style="color:#1A1D24;">Guide : acheter un terrain à bâtir</a></li>
-      <li style="margin-bottom:6px;"><a href="${SITE_URL}/brochure" style="color:#1A1D24;">Brochure complète du programme</a></li>
+      <li style="margin-bottom:6px;"><a href="${utmUrl("/outils/simulateur-pret", "lead_confirmation", "simulateur")}" style="color:#1A1D24;">Simulateur de prêt immobilier</a></li>
+      <li style="margin-bottom:6px;"><a href="${utmUrl("/outils/budget-total", "lead_confirmation", "budget")}" style="color:#1A1D24;">Budget total terrain + maison</a></li>
+      <li style="margin-bottom:6px;"><a href="${utmUrl("/guide/acheter-terrain-a-batir", "lead_confirmation", "guide")}" style="color:#1A1D24;">Guide : acheter un terrain à bâtir</a></li>
+      <li style="margin-bottom:6px;"><a href="${utmUrl("/brochure", "lead_confirmation", "brochure")}" style="color:#1A1D24;">Brochure complète du programme</a></li>
     </ul>
 
     <p style="margin:24px 0 0;color:#6b6f72;font-size:14px;">À très bientôt,<br/><strong style="color:#1A1D24;">L'équipe du Clos des Cocales</strong></p>
@@ -199,10 +205,10 @@ function followUpHtml(lead: LeadPayload) {
     <div style="background:#FAFAF7;border-radius:14px;padding:18px 20px;margin:0 0 20px;">
       <div style="font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:#B89968;font-weight:600;margin-bottom:10px;">Ressources utiles</div>
       <ul style="padding-left:18px;margin:0;">
-        <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/budget-total" style="color:#1A1D24;">Calculer votre budget total terrain + maison</a></li>
-        <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/simulateur-pret" style="color:#1A1D24;">Simulateur de prêt</a></li>
-        <li style="margin-bottom:6px;"><a href="${SITE_URL}/guide/acheter-terrain-a-batir" style="color:#1A1D24;">Guide pratique de l'achat de terrain</a></li>
-        <li style="margin-bottom:6px;"><a href="${SITE_URL}/brochure" style="color:#1A1D24;">Brochure complète du programme</a></li>
+        <li style="margin-bottom:6px;"><a href="${utmUrl("/outils/budget-total", "lead_followup", "budget")}" style="color:#1A1D24;">Calculer votre budget total terrain + maison</a></li>
+        <li style="margin-bottom:6px;"><a href="${utmUrl("/outils/simulateur-pret", "lead_followup", "simulateur")}" style="color:#1A1D24;">Simulateur de prêt</a></li>
+        <li style="margin-bottom:6px;"><a href="${utmUrl("/guide/acheter-terrain-a-batir", "lead_followup", "guide")}" style="color:#1A1D24;">Guide pratique de l'achat de terrain</a></li>
+        <li style="margin-bottom:6px;"><a href="${utmUrl("/brochure", "lead_followup", "brochure")}" style="color:#1A1D24;">Brochure complète du programme</a></li>
       </ul>
     </div>
 
