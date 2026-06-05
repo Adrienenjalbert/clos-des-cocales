@@ -43,6 +43,12 @@ function esc(s: string) {
   return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
 }
 
+// Add UTM params to internal links for GA4 attribution
+function utmUrl(path: string, campaign: string, content: string) {
+  const sep = path.includes("?") ? "&" : "?";
+  return `${SITE_URL}${path}${sep}utm_source=email&utm_medium=email&utm_campaign=${encodeURIComponent(campaign)}&utm_content=${encodeURIComponent(content)}`;
+}
+
 // ---------- Brand-styled wrapper (inline CSS, mobile-first, light bg) ----------
 function shell(title: string, preheader: string, body: string) {
   return `<!doctype html>
