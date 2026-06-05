@@ -19,21 +19,18 @@ const GENERIC: Commune = {
   slug: "herault",
   nom: "l'Hérault",
   codePostal: "34",
-  distanceMin: 15,
-  distanceKm: 17,
+  distanceMin: 40,
+  distanceKm: 50,
   population: 0,
   prixMoyenTerrainM2: 280,
-  prixExempleConcurrence: [
-    { surface: 450, prix: 135000 },
-    { surface: 500, prix: 140000 },
-  ],
+  prixExempleConcurrence: [],
   atouts: [
     "29 lots viabilisés, prêts à construire",
-    "Entre Béziers (15 min) et Pézenas (20 min)",
-    "Cadre village authentique du Languedoc",
+    "À 40 min de Montpellier, 15 min de Béziers, 25 min des plages",
+    "Cadre village authentique du Languedoc, écoles & commerces sur place",
   ],
   intro:
-    "Vous cherchez un terrain à bâtir dans l'Hérault ? Le Clos des Cocales à Espondeilhan propose 29 lots viabilisés, dès 99 900 €, à 15 minutes de Béziers. Prix transparents, plan de masse disponible, livraison immédiate.",
+    "Vous cherchez un terrain à bâtir dans l'Hérault ? Le Clos des Cocales à Espondeilhan propose 29 lots viabilisés, dès 92 500 €, à 40 min de Montpellier et 15 min de Béziers. Plan de masse disponible, livraison immédiate.",
   faq: [
     {
       q: "Les terrains sont-ils viabilisés ?",
@@ -49,6 +46,7 @@ const GENERIC: Commune = {
     },
   ],
 };
+
 
 export const LandingAds = () => {
   const { slug } = useParams<{ slug: string }>();
