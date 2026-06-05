@@ -30,8 +30,8 @@ const SimulateurPret = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Simulateur de prêt immobilier — Terrain à bâtir Hérault | Le Clos des Cocales"
-        description="Calculez votre mensualité de prêt pour l'achat d'un terrain à bâtir à Espondeilhan, Béziers, Pézenas. Simulation gratuite, instantanée."
+        title="Simulateur de prêt immobilier | Le Clos des Cocales"
+        description="Calculez votre mensualité de prêt pour l'achat d'un terrain à bâtir à Espondeilhan, Béziers, Pézenas. Simulation gratuite."
         path="/outils/simulateur-pret"
       />
       <SiteHeader />
