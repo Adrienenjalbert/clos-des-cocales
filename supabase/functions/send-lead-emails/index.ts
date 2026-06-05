@@ -124,10 +124,10 @@ function confirmationHtml(lead: LeadPayload) {
 
     <p style="margin:0 0 8px;font-weight:600;">En attendant, préparez votre projet :</p>
     <ul style="padding-left:18px;margin:0 0 20px;">
-      <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/simulateur-pret" style="color:#1A1D24;">Simulateur de prêt immobilier</a></li>
-      <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/budget-total" style="color:#1A1D24;">Budget total terrain + maison</a></li>
-      <li style="margin-bottom:6px;"><a href="${SITE_URL}/guide/acheter-terrain-a-batir" style="color:#1A1D24;">Guide : acheter un terrain à bâtir</a></li>
-      <li style="margin-bottom:6px;"><a href="${SITE_URL}/brochure" style="color:#1A1D24;">Brochure complète du programme</a></li>
+      <li style="margin-bottom:6px;"><a href="${utmUrl("/outils/simulateur-pret", "lead_confirmation", "simulateur")}" style="color:#1A1D24;">Simulateur de prêt immobilier</a></li>
+      <li style="margin-bottom:6px;"><a href="${utmUrl("/outils/budget-total", "lead_confirmation", "budget")}" style="color:#1A1D24;">Budget total terrain + maison</a></li>
+      <li style="margin-bottom:6px;"><a href="${utmUrl("/guide/acheter-terrain-a-batir", "lead_confirmation", "guide")}" style="color:#1A1D24;">Guide : acheter un terrain à bâtir</a></li>
+      <li style="margin-bottom:6px;"><a href="${utmUrl("/brochure", "lead_confirmation", "brochure")}" style="color:#1A1D24;">Brochure complète du programme</a></li>
     </ul>
 
     <p style="margin:24px 0 0;color:#6b6f72;font-size:14px;">À très bientôt,<br/><strong style="color:#1A1D24;">L'équipe du Clos des Cocales</strong></p>
