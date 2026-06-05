@@ -59,6 +59,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary/30 p-4">
+      <SEOHead title="Connexion administrateur | Le Clos des Cocales" description="Espace administrateur." path="/auth" noindex />
       <div className="w-full max-w-md bg-background border border-border rounded-2xl p-8 shadow-soft">
         <h1 className="font-display text-2xl mb-1">Espace administrateur</h1>
         <p className="text-sm text-muted-foreground mb-6">
