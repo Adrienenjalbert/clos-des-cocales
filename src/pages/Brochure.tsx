@@ -274,33 +274,63 @@ const Brochure = () => {
         {/* PLAN DE MASSE */}
         <section className="bg-secondary/30 py-16 md:py-24">
           <div className="container mx-auto">
-            <div className="max-w-2xl mb-8">
+            <div className="max-w-2xl mx-auto text-center mb-8">
               <span className="text-xs uppercase tracking-widest text-accent font-semibold">Plan officiel</span>
               <h2 className="font-display text-3xl md:text-4xl font-medium text-foreground mt-3">
                 Plan de masse — octobre 2024
               </h2>
               <p className="text-muted-foreground mt-3">
                 Document certifié par notre géomètre-expert Denis Steinberg (Béziers / Montpellier).
+                29 lots de 335 à 832 m², voiries et réseaux livrés.
               </p>
             </div>
-            <div className="relative rounded-2xl overflow-hidden shadow-elevated border border-border bg-background">
-              <img
-                src={planImg.url}
-                alt="Plan de masse complet du Clos des Cocales II"
-                width={1600}
-                height={2200}
-                className="w-full h-auto"
-              />
-            </div>
-            <div className="mt-6 flex justify-center">
-              <Button asChild size="lg" variant="outline" className="rounded-full">
-                <a href={planPdf.url} target="_blank" rel="noopener" download onClick={() => track("plan_pdf_download", { location: "brochure" })}>
-                  <Download className="w-4 h-4 mr-2" /> Plan PDF haute définition
-                </a>
-              </Button>
+
+            <div className="max-w-3xl mx-auto">
+              <a
+                href={planImg.url}
+                target="_blank"
+                rel="noopener"
+                onClick={() => track("plan_image_open", { location: "brochure" })}
+                className="group relative block rounded-2xl overflow-hidden shadow-elevated border border-border bg-background"
+                aria-label="Ouvrir le plan de masse en grand"
+              >
+                <img
+                  src={planImg.url}
+                  alt="Plan de masse complet du Clos des Cocales II"
+                  width={1600}
+                  height={2200}
+                  loading="lazy"
+                  className="w-full h-auto max-h-[70vh] object-contain bg-background"
+                />
+                <span className="absolute bottom-3 right-3 bg-foreground/85 text-background text-[11px] uppercase tracking-wider px-3 py-1.5 rounded-full opacity-90 group-hover:opacity-100 transition">
+                  Cliquer pour agrandir
+                </span>
+              </a>
+
+              {/* Légende */}
+              <div className="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
+                <span className="inline-flex items-center gap-2"><span className="w-3 h-3 rounded-sm bg-emerald-500/80" /> Disponible</span>
+                <span className="inline-flex items-center gap-2"><span className="w-3 h-3 rounded-sm bg-amber-500/80" /> Optionné</span>
+                <span className="inline-flex items-center gap-2"><span className="w-3 h-3 rounded-sm bg-muted-foreground/40" /> Réservé / vendu</span>
+              </div>
+
+              {/* CTAs */}
+              <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                <Button asChild size="lg" className="rounded-full bg-accent hover:bg-accent/90 text-accent-foreground shadow-cta">
+                  <a href={planPdf.url} target="_blank" rel="noopener" download onClick={() => track("plan_pdf_download", { location: "brochure" })}>
+                    <Download className="w-4 h-4 mr-2" /> Télécharger le plan PDF
+                  </a>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="rounded-full">
+                  <Link to="/#lots" onClick={() => track("plan_see_lots", { location: "brochure" })}>
+                    Voir les lots disponibles
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
+
 
         {/* LOTS TABLE */}
         <section className="container mx-auto py-16 md:py-24">
