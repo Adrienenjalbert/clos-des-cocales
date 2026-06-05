@@ -121,6 +121,7 @@ function confirmationHtml(lead: LeadPayload) {
       <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/simulateur-pret" style="color:#1A1D24;">Simulateur de prêt immobilier</a></li>
       <li style="margin-bottom:6px;"><a href="${SITE_URL}/outils/budget-total" style="color:#1A1D24;">Budget total terrain + maison</a></li>
       <li style="margin-bottom:6px;"><a href="${SITE_URL}/guide/acheter-terrain-a-batir" style="color:#1A1D24;">Guide : acheter un terrain à bâtir</a></li>
+      <li style="margin-bottom:6px;"><a href="${SITE_URL}/brochure" style="color:#1A1D24;">Brochure complète du programme</a></li>
     </ul>
 
     <p style="margin:24px 0 0;color:#6b6f72;font-size:14px;">À très bientôt,<br/><strong style="color:#1A1D24;">L'équipe du Clos des Cocales</strong></p>
