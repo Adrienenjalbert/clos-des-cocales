@@ -11,7 +11,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { track, buildLeadMessage } from "@/lib/analytics";
 
-const STORAGE_KEY = "exit_intent_seen_v1";
+const STORAGE_KEY = "exit_intent_seen_v2";
+const COOLDOWN_DAYS = 14;
+const MIN_DWELL_MS = 45_000; // au moins 45s sur le site
+const MIN_SCROLL_RATIO = 0.45; // au moins 45% de la page scrollée
 
 const schema = z.object({
   name: z.string().trim().min(2, "Nom requis").max(120),
@@ -30,29 +33,59 @@ export const ExitIntentModal = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (sessionStorage.getItem(STORAGE_KEY)) return;
 
+    // Cooldown persistant 14 jours (au lieu de session)
+    try {
+      const seenAt = Number(localStorage.getItem(STORAGE_KEY) || 0);
+      if (seenAt && Date.now() - seenAt < COOLDOWN_DAYS * 86_400_000) return;
+    } catch { /* ignore */ }
+
+    // Pas d'exit intent sur mobile/tactile (le mouseleave n'a pas de sens)
+    const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    if (isTouch) return;
+
+    const mountedAt = Date.now();
     let triggered = false;
-    const trigger = (cause: "mouseleave" | "timer") => {
+    let scrolledEnough = false;
+
+    const onScroll = () => {
+      const h = document.documentElement;
+      const ratio = (h.scrollTop + window.innerHeight) / Math.max(h.scrollHeight, 1);
+      if (ratio >= MIN_SCROLL_RATIO) {
+        scrolledEnough = true;
+        window.removeEventListener("scroll", onScroll);
+      }
+    };
+
+    const trigger = (cause: "mouseleave") => {
       if (triggered) return;
+      if (Date.now() - mountedAt < MIN_DWELL_MS) return;
+      if (!scrolledEnough) return;
+      // Ne pas surgir si l'utilisateur est déjà dans un formulaire/dialog
+      const active = document.activeElement as HTMLElement | null;
+      if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.tagName === "SELECT")) return;
+      if (document.querySelector('[role="dialog"][data-state="open"]')) return;
+
       triggered = true;
-      sessionStorage.setItem(STORAGE_KEY, "1");
+      try { localStorage.setItem(STORAGE_KEY, String(Date.now())); } catch { /* ignore */ }
       track("exit_intent_triggered", { cause });
       setOpen(true);
     };
 
     const onMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0) trigger("mouseleave");
+      // Vrai exit intent : sortie par le haut, mouvement vers la barre d'onglets
+      if (e.clientY <= 0 && e.relatedTarget === null) trigger("mouseleave");
     };
 
+    window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("mouseleave", onMouseLeave);
-    const timer = window.setTimeout(() => trigger("timer"), 35000);
 
     return () => {
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseleave", onMouseLeave);
-      window.clearTimeout(timer);
     };
   }, []);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
