@@ -193,7 +193,7 @@ export const LandingAds = () => {
                     <div className="text-[10px] uppercase tracking-wider text-muted-foreground">lots dispo</div>
                   </div>
                   <div>
-                    <div className="text-xl font-display font-semibold text-foreground">{fmt(lotMin).replace(" €", "")}€</div>
+                    <div className="text-xl font-display font-semibold text-foreground">92,5k€</div>
                     <div className="text-[10px] uppercase tracking-wider text-muted-foreground">dès</div>
                   </div>
                   <div>
@@ -211,7 +211,7 @@ export const LandingAds = () => {
           <div className="container mx-auto py-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             {[
               { i: ShieldCheck, t: "Lots viabilisés" },
-              { i: TrendingDown, t: "Prix transparents" },
+              { i: Check, t: "Prix transparents" },
               { i: Clock, t: "Livraison immédiate" },
               { i: MapPin, t: "Espondeilhan (34)" },
             ].map(({ i: Icon, t }) => (
