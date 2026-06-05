@@ -19,8 +19,8 @@ export const CommunePage = () => {
   const concurrenceMin = Math.min(...commune.prixExempleConcurrence.map((p) => p.prix));
   const economie = Math.round(((concurrenceMin - lotMin) / concurrenceMin) * 100);
 
-  const title = `Terrain à bâtir ${commune.nom} (${commune.codePostal}) — alternative à ${commune.distanceMin} min dès ${formatEuro(lotMin)}`;
-  const description = `Vous cherchez un terrain à bâtir près de ${commune.nom} ? Le Clos des Cocales à Espondeilhan propose 29 lots viabilisés à ${commune.distanceMin} min, dès ${formatEuro(lotMin)}. Comparatif prix, FAQ, plan de masse.`;
+  const title = `Terrain à bâtir ${commune.nom} dès ${formatEuro(lotMin)} — Le Clos des Cocales`;
+  const description = `Terrain à bâtir près de ${commune.nom} : 29 lots viabilisés à ${commune.distanceMin} min, dès ${formatEuro(lotMin)}. Comparatif prix, FAQ, plan de masse.`;
 
   const jsonLd = [
     {
