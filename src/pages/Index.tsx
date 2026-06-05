@@ -20,7 +20,7 @@ const Index = () => {
   const contactRef = useRef<ContactSectionHandle>(null);
 
   useEffect(() => {
-    document.title = "Le Clos des Cocales — Terrain à bâtir à 40 min de Montpellier, dès 92 500 €";
+    document.title = "Terrains à bâtir Espondeilhan — Le Clos des Cocales";
 
     const setMeta = (name: string, content: string) => {
       let el = document.querySelector(`meta[name="${name}"]`);
@@ -34,10 +34,21 @@ const Index = () => {
 
     setMeta(
       "description",
-      "29 terrains à bâtir viabilisés à 40 min de Montpellier, 15 min de Béziers. Dès 92 500 €. Frais de notaire réduits, livraison immédiate. Plan de masse & brochure."
+      "29 terrains à bâtir viabilisés à 40 min de Montpellier, dès 92 500 €. Frais de notaire réduits, livraison immédiate."
     );
     setMeta("robots", "index, follow");
     document.documentElement.lang = "fr";
+
+    const setCanonical = (href: string) => {
+      let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+      if (!link) {
+        link = document.createElement("link");
+        link.setAttribute("rel", "canonical");
+        document.head.appendChild(link);
+      }
+      link.setAttribute("href", href);
+    };
+    setCanonical("https://clos-des-cocales.fr/");
 
     // JSON-LD
     const ldId = "ld-real-estate";
