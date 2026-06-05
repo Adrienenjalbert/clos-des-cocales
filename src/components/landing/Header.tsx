@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Phone, MapPin, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/config/contact";
 import { track } from "@/lib/analytics";
+import logoCC from "@/assets/logo-cc.png";
 
 const NAV = [
   { href: "#programme", label: "Le programme" },
@@ -33,9 +35,9 @@ export const Header = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between py-4">
-        <a href="#top" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-display text-lg font-semibold">
-            C
+        <a href="#top" className="flex items-center gap-2.5 group">
+          <div className={`w-10 h-10 rounded-md flex items-center justify-center overflow-hidden ${scrolled ? "bg-background border border-border" : "bg-background/15 backdrop-blur-sm border border-background/30"}`}>
+            <img src={logoCC} alt="Le Clos des Cocales" width={40} height={40} className={`w-8 h-8 object-contain ${scrolled ? "" : "brightness-0 invert"}`} />
           </div>
           <div className="leading-tight">
             <div className="font-display text-base font-semibold text-foreground">
@@ -72,9 +74,9 @@ export const Header = () => {
             asChild
             className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full shadow-cta"
           >
-            <a href="#contact" onClick={() => track("click_brochure", { location: "header_desktop" })}>
-              Réserver une visite
-            </a>
+            <Link to="/brochure" onClick={() => track("click_brochure", { location: "header_desktop" })}>
+              Brochure & visite
+            </Link>
           </Button>
         </div>
 
