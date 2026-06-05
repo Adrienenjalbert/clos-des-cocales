@@ -8,8 +8,8 @@ import { PROMOTEUR } from "@/data/promoteur";
 const APropos = () => (
   <div className="min-h-screen bg-background">
     <SEOHead
-      title={`À propos — ${PROMOTEUR.nom} | Aménageur de terrains à bâtir, Hérault`}
-      description={`${PROMOTEUR.nom} aménage et commercialise des lotissements de terrains à bâtir dans l'Hérault. Garantie financière d'achèvement, permis d'aménager, accompagnement personnalisé.`}
+      title={`À propos — ${PROMOTEUR.nom} | Aménageur Hérault`}
+      description={`${PROMOTEUR.nom} aménage des lotissements de terrains à bâtir dans l'Hérault. Garantie financière d'achèvement, permis d'aménager.`}
       path="/a-propos"
     />
     <SiteHeader />
