@@ -19,6 +19,7 @@ import Contact from "./pages/Contact.tsx";
 import Merci from "./pages/Merci.tsx";
 import LandingAds from "./pages/LandingAds.tsx";
 import Brochure from "./pages/Brochure.tsx";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/programme" element={<Index />} />
