@@ -56,10 +56,13 @@ const Index = () => {
         "Lotissement de 29 terrains à bâtir viabilisés à Espondeilhan, à 40 min de Montpellier et 15 min de Béziers.",
       address: {
         "@type": "PostalAddress",
+        streetAddress: "Avenue de la Mer",
         addressLocality: "Espondeilhan",
+        postalCode: "34290",
         addressRegion: "Hérault",
         addressCountry: "FR",
       },
+      geo: { "@type": "GeoCoordinates", latitude: 43.4394, longitude: 3.2645 },
       offers: { "@type": "Offer", priceCurrency: "EUR", price: "92500" },
     });
   }, []);
