@@ -182,6 +182,8 @@ export const LotsTable = ({ onSelectLot }: Props) => {
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
+              id="lots-search"
+              aria-label="Rechercher un lot par numéro ou surface"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Rechercher un n° de lot, une surface…"

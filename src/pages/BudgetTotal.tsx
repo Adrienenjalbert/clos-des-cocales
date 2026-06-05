@@ -29,8 +29,8 @@ const BudgetTotal = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Estimateur budget total — terrain + construction maison | Le Clos des Cocales"
-        description="Estimez le budget total de votre projet : terrain à bâtir + construction maison neuve, frais de notaire réduits 3 %, raccordements, aléas."
+        title="Estimateur budget terrain + maison | Le Clos des Cocales"
+        description="Estimez le budget total : terrain à bâtir + construction maison neuve, frais de notaire réduits, raccordements, aléas."
         path="/outils/budget-total"
       />
       <SiteHeader />
@@ -47,16 +47,16 @@ const BudgetTotal = () => {
           <div className="mt-10 grid md:grid-cols-2 gap-6">
             <div className="bg-background border border-border rounded-2xl p-6 md:p-8 shadow-soft space-y-6">
               <div>
-                <Label className="font-semibold text-foreground">Prix du terrain : {fmt(terrain)}</Label>
-                <Slider value={[terrain]} onValueChange={(v) => setTerrain(v[0])} min={80000} max={200000} step={1000} className="mt-3" />
+                <Label htmlFor="bt-terrain" className="font-semibold text-foreground">Prix du terrain : {fmt(terrain)}</Label>
+                <Slider id="bt-terrain" value={[terrain]} onValueChange={(v) => setTerrain(v[0])} min={80000} max={200000} step={1000} className="mt-3" aria-label="Prix du terrain" />
               </div>
               <div>
-                <Label className="font-semibold text-foreground">Surface maison : {surfaceMaison} m²</Label>
-                <Slider value={[surfaceMaison]} onValueChange={(v) => setSurfaceMaison(v[0])} min={70} max={200} step={5} className="mt-3" />
+                <Label htmlFor="bt-surface" className="font-semibold text-foreground">Surface maison : {surfaceMaison} m²</Label>
+                <Slider id="bt-surface" value={[surfaceMaison]} onValueChange={(v) => setSurfaceMaison(v[0])} min={70} max={200} step={5} className="mt-3" aria-label="Surface maison en m²" />
               </div>
               <div>
-                <Label className="font-semibold text-foreground">Coût construction : {fmt(coutM2)} / m²</Label>
-                <Slider value={[coutM2]} onValueChange={(v) => setCoutM2(v[0])} min={1300} max={2800} step={50} className="mt-3" />
+                <Label htmlFor="bt-cout" className="font-semibold text-foreground">Coût construction : {fmt(coutM2)} / m²</Label>
+                <Slider id="bt-cout" value={[coutM2]} onValueChange={(v) => setCoutM2(v[0])} min={1300} max={2800} step={50} className="mt-3" aria-label="Coût de construction au m²" />
                 <p className="text-xs text-muted-foreground mt-2">
                   Indicatif RE2020 : 1 500 € (entrée gamme) à 2 500 € (premium) / m² hors aménagements extérieurs.
                 </p>

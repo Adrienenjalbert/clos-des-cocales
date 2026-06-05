@@ -34,8 +34,8 @@ const sections = [
 const Guide = () => (
   <div className="min-h-screen bg-background">
     <SEOHead
-      title="Guide d'achat — Acheter un terrain à bâtir dans l'Hérault en 2025"
-      description="Tout savoir pour acheter un terrain à bâtir dans l'Hérault : viabilisation, PLU, frais de notaire réduits, financement, CCMI, délais. Guide complet."
+      title="Guide d'achat terrain à bâtir Hérault 2025"
+      description="Tout savoir pour acheter un terrain à bâtir dans l'Hérault : viabilisation, PLU, frais de notaire réduits, financement, CCMI, délais."
       path="/guide/acheter-terrain-a-batir"
     />
     <SiteHeader />

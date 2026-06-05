@@ -9,7 +9,7 @@ interface Props {
   noindex?: boolean;
 }
 
-const SITE = "https://clos-des-cocales.lovable.app";
+const SITE = "https://clos-des-cocales.fr";
 
 export const SEOHead = ({ title, description, path = "/", image, jsonLd, noindex }: Props) => {
   const url = `${SITE}${path}`;
