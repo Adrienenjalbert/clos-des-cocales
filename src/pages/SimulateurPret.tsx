@@ -48,26 +48,26 @@ const SimulateurPret = () => {
           <div className="mt-10 grid md:grid-cols-2 gap-6">
             <div className="bg-background border border-border rounded-2xl p-6 md:p-8 shadow-soft space-y-6">
               <div>
-                <Label className="font-semibold text-foreground">Prix du terrain</Label>
+                <Label htmlFor="sim-montant" className="font-semibold text-foreground">Prix du terrain</Label>
                 <div className="mt-2 flex items-center gap-3">
-                  <Slider value={[montant]} onValueChange={(v) => setMontant(v[0])} min={50000} max={300000} step={1000} className="flex-1" />
-                  <Input type="number" value={montant} onChange={(e) => setMontant(+e.target.value || 0)} className="w-32" />
+                  <Slider value={[montant]} onValueChange={(v) => setMontant(v[0])} min={50000} max={300000} step={1000} className="flex-1" aria-label="Prix du terrain" />
+                  <Input id="sim-montant" aria-label="Prix du terrain en euros" type="number" value={montant} onChange={(e) => setMontant(+e.target.value || 0)} className="w-32" />
                 </div>
               </div>
               <div>
-                <Label className="font-semibold text-foreground">Apport personnel</Label>
+                <Label htmlFor="sim-apport" className="font-semibold text-foreground">Apport personnel</Label>
                 <div className="mt-2 flex items-center gap-3">
-                  <Slider value={[apport]} onValueChange={(v) => setApport(v[0])} min={0} max={Math.max(montant, 50000)} step={1000} className="flex-1" />
-                  <Input type="number" value={apport} onChange={(e) => setApport(+e.target.value || 0)} className="w-32" />
+                  <Slider value={[apport]} onValueChange={(v) => setApport(v[0])} min={0} max={Math.max(montant, 50000)} step={1000} className="flex-1" aria-label="Apport personnel" />
+                  <Input id="sim-apport" aria-label="Apport personnel en euros" type="number" value={apport} onChange={(e) => setApport(+e.target.value || 0)} className="w-32" />
                 </div>
               </div>
               <div>
-                <Label className="font-semibold text-foreground">Durée : {duree} ans</Label>
-                <Slider value={[duree]} onValueChange={(v) => setDuree(v[0])} min={5} max={30} step={1} className="mt-3" />
+                <Label htmlFor="sim-duree" className="font-semibold text-foreground">Durée : {duree} ans</Label>
+                <Slider id="sim-duree" value={[duree]} onValueChange={(v) => setDuree(v[0])} min={5} max={30} step={1} className="mt-3" aria-label="Durée du prêt en années" />
               </div>
               <div>
-                <Label className="font-semibold text-foreground">Taux annuel : {taux.toFixed(2)} %</Label>
-                <Slider value={[taux]} onValueChange={(v) => setTaux(v[0])} min={1} max={6} step={0.05} className="mt-3" />
+                <Label htmlFor="sim-taux" className="font-semibold text-foreground">Taux annuel : {taux.toFixed(2)} %</Label>
+                <Slider id="sim-taux" value={[taux]} onValueChange={(v) => setTaux(v[0])} min={1} max={6} step={0.05} className="mt-3" aria-label="Taux annuel en pourcentage" />
                 <p className="text-xs text-muted-foreground mt-2">Taux moyen marché 2025 : 3,5 – 3,9 % sur 20 ans (hors assurance).</p>
               </div>
             </div>
