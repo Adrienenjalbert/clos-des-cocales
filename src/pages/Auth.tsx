@@ -32,29 +32,51 @@ const Auth = () => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    if (mode === "login") {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) toast.error(error.message);
-      else {
+    try {
+      if (mode === "login") {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          toast.error(error.message);
+          return;
+        }
         await bootstrapAdmin();
         navigate("/admin", { replace: true });
+        return;
       }
-    } else {
+
       const { error, data } = await supabase.auth.signUp({
         email,
         password,
         options: { emailRedirectTo: `${window.location.origin}/admin` },
       });
-      if (error) toast.error(error.message);
-      else if (data.session) {
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+
+      // If email confirmation is disabled, signUp returns a session directly.
+      if (data.session) {
         await bootstrapAdmin();
         toast.success("Compte créé.");
         navigate("/admin", { replace: true });
-      } else {
-        toast.success("Compte créé. Vérifiez votre email pour confirmer.");
+        return;
       }
+
+      // Otherwise try an immediate sign-in: succeeds when the project does not
+      // require email confirmation, even though signUp returned no session.
+      const { data: signInData } = await supabase.auth.signInWithPassword({ email, password });
+      if (signInData.session) {
+        await bootstrapAdmin();
+        toast.success("Compte créé.");
+        navigate("/admin", { replace: true });
+        return;
+      }
+
+      toast.success("Compte créé. Vérifiez votre email pour confirmer, puis connectez-vous.");
+      setMode("login");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

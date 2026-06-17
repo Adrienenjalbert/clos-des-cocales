@@ -10,6 +10,7 @@ import { CONTACT, whatsappLink } from "@/config/contact";
 import { track } from "@/lib/analytics";
 import logoCC from "@/assets/logo-cc.png";
 import heroImg from "@/assets/hero-cocales.jpg";
+import planImg from "@/assets/plan-de-masse.png.asset.json";
 
 const PRIX_DEPART = "92 500 €";
 
@@ -238,7 +239,7 @@ export const LandingAds = () => {
             onClick={() => track("plan_zoom_open", { location: "lp", commune: commune.slug })}
           >
             <img
-              src={"/__l5e/assets-v1/5e57fae3-fc7b-4f9b-aa34-4922ff1462f5/plan-de-masse.png"}
+              src={planImg.url}
               alt="Plan de masse Le Clos des Cocales"
               width={1600}
               height={2200}

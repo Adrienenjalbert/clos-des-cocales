@@ -19,6 +19,8 @@ import Contact from "./pages/Contact.tsx";
 import Merci from "./pages/Merci.tsx";
 import LandingAds from "./pages/LandingAds.tsx";
 import Brochure from "./pages/Brochure.tsx";
+import MentionsLegales from "./pages/MentionsLegales.tsx";
+import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite.tsx";
 import { ScrollToTop } from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
@@ -48,6 +50,8 @@ const App = () => (
           <Route path="/merci" element={<Merci />} />
           <Route path="/lp/:slug" element={<LandingAds />} />
           <Route path="/brochure" element={<Brochure />} />
+          <Route path="/mentions-legales" element={<MentionsLegales />} />
+          <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -26,8 +26,8 @@ const Merci = () => {
   useEffect(() => {
     // Conversion tracking — GA4 & dataLayer
     track("lead_thank_you_view", { lot: lot || null });
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "conversion", {
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", "conversion", {
         event_category: "lead",
         event_label: lot || "no_lot",
       });
